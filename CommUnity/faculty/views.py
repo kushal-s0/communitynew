@@ -14,7 +14,8 @@ from events.models import Event
 from django.db.models import Q
 from events.google_calendar import create_google_calendar_event
 from django.contrib.auth import get_user_model
-
+from events.models import FacultyLockDate
+from .forms import FacultyLockDateForm
 User = get_user_model()
 
 # Create your views here.
@@ -231,3 +232,17 @@ def approve_clubs(request):
         return HttpResponse("User profile not found")
     except Faculty.DoesNotExist:
         return HttpResponse("Faculty profile not found")
+    
+def manage_faculty_lock_dates(request):
+    if request.method == "POST":
+        form = FacultyLockDateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Date locked successfully!")
+            return redirect('manage_faculty_lock_dates')
+        else:
+            messages.error(request, "Error locking the date. Please check your input.")
+
+    lock_dates = FacultyLockDate.objects.all().order_by('locked_date')
+    form = FacultyLockDateForm()
+    return render(request, 'faculty_lock_date.html', {'lock_dates': lock_dates, 'form': form})

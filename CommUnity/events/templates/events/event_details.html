@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event.name }} - Event Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-4">
+    <h2>{{ event.name }}</h2>
+    <p><strong>Location:</strong> {{ event.location }}</p>
+    <p><strong>Date & Time:</strong> {{ event.date_time }} - {{ event.end_time }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>
+    <a href="/events/calendar/" class="btn btn-primary">Back to Calendar</a>
+</div>
+
+</body>
+</html>

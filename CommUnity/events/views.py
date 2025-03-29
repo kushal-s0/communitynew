@@ -5,7 +5,32 @@ from .models import Event, FacultyLockDate
 from .google_calendar import create_google_calendar_event
 from django.conf import settings
 from django.core.mail import send_mail
-from .models import Faculty , CoreMember
+from .models import Faculty , CoreMember, Location
+from datetime import datetime, timedelta
+from django.utils.timezone import make_aware
+from django.http import JsonResponse
+
+def get_calendar_events(request):
+    events = Event.objects.filter(status="approved")
+    event_list = [
+        {   
+            "id": event.id,
+            "title": event.title,
+            "start": event.date_time.isoformat(),
+            "end": (event.date_time + timedelta(hours=event.duration)).isoformat(),
+            "location": event.location.location,
+            "details_url": f"/events/details/{event.id}/",
+        }
+        for event in events
+    ]
+    
+    return JsonResponse(event_list, safe=False)
+
+def event_details(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    event.end_time = event.date_time + timedelta(hours=event.duration)
+    return render(request, "events/event_details.html", {"event": event})
+
 
 @login_required
 def create_event(request):
@@ -19,20 +44,43 @@ def create_event(request):
     if not core_member.assosiation:
         messages.error(request, "You must be a member of an association to create events.")
         return redirect("view_calendar")
+    locations = Location.objects.all()
 
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
-        date_time = request.POST["date_time"]
-        location = request.POST["location"]
+        date_time = datetime.strptime(request.POST["date_time"], "%Y-%m-%dT%H:%M")
+        location_id = request.POST["location"]
+        duration = int(request.POST["duration"])
 
+        location = Location.objects.get(id=location_id)
+        # date_time = make_aware(datetime.datetime.strptime(date_time, "%Y-%m-%dT%H:%M"))
+        event_end_time = date_time + timedelta(hours=duration)
+
+        # location = get_object_or_404(Location, id=location_id)
         # Automatically assign club from Core Member
         ass = core_member.assosiation  
+        if FacultyLockDate.objects.filter(locked_date=date_time.date()).exists():
+            messages.error(request, "This date is locked by faculty and cannot have events.")
+            return redirect("create_event")
+        overlapping_events = Event.objects.filter(
+            location=location,
+            status="approved",
+            date_time__lt=event_end_time,
+            date_time__gte=date_time
+        )
+        for event in overlapping_events:
+            existing_event_end_time = event.date_time + timedelta(hours=event.duration)
+
+            if (date_time < existing_event_end_time and event.date_time < event_end_time):
+                messages.error(request, "This location is already booked during the selected time.")
+                return redirect("create_event")
 
         event = Event.objects.create(
             title=title,
             description=description,
             date_time=date_time,
+            duration=duration,
             location=location,
             assosiation=ass,
             created_by=user_profile,
@@ -54,22 +102,10 @@ def create_event(request):
         messages.success(request, "Event submitted for approval!")
         return redirect("view_calendar")
 
-    return render(request, "events/create_event.html")
+    return render(request, "events/create_event.html", {"locations":locations})
 
 
 
-# @login_required
-# def approve_event(request, event_id):
-#     event = get_object_or_404(Event, id=event_id)
-#     if request.user.is_faculty and request.user.faculty.club == event.club:
-#         event.status = "approved"
-#         event.approved_by = request.user
-#         event.google_calendar_event_id = create_google_calendar_event(event)
-#         event.save()
-#         messages.success(request, "Event approved and added to Google Calendar!")
-#     return redirect("view_calendar")
-
-@login_required
 def view_calendar(request):
     events = Event.objects.filter(status="approved")
     return render(request, "events/view_calendar.html", {"events": events})

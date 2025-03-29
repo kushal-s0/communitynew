@@ -11,4 +11,5 @@ urlpatterns = [
     path('add_core_member', views.add_core_member_view, name='add_core_member'),
     path('select_student',views.select_student,name='select_student'),
     path('approve_clubs/', views.approve_clubs, name='approve_clubs'),
+    path('faculty-lock-dates/', views.manage_faculty_lock_dates, name='manage_faculty_lock_dates'),
 ]
