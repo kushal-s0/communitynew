@@ -124,6 +124,23 @@
         <p>No delete requests.</p>
     {% endfor %}
     </div>
-        
+    <h2>Event Requests</h2>
+    <div class="card event">
+    {% for event in event_requests %}
+        <div class="indContainer">
+            <h3>Event Request: {{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <p>Date: {{ event.date_time }}</p>
+            <p>Location: {{ event.location }}</p>
+            <form method="POST" action="{% url 'approve_clubs' %}">
+                {% csrf_token %}
+                <input type="hidden" name="event_id" value="{{ event.id }}">
+                <button type="submit" name="action" value="approve_event">Approve</button>
+                <button type="submit" name="action" value="reject_event">Reject</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No event requests.</p>
+    {% endfor %}
     </div>
 {% endblock content %}

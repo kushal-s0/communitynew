@@ -6,13 +6,13 @@ from committees.models import Associations
 from members.models import CoreMember, Member
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+from events.models import Event
 from django.db.models import Q
-
+from events.google_calendar import create_google_calendar_event
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -167,47 +167,63 @@ def approve_clubs(request):
         # Fetch pending requests
         pending_clubs = Associations.objects.filter(status='pending', faculty_incharge=faculty)
         delete_requests = Associations.objects.filter(status='delete_pending', faculty_incharge=faculty)
+        event_requests  = Event.objects.filter(status='pending', assosiation__faculty_incharge=faculty)
 
         if request.method == "POST":
-            print('Post')
-            club_id = request.POST.get("club_id")
             action = request.POST.get("action")
-            club = get_object_or_404(Associations, id=club_id)
-            print(club)
-            
 
-            # Ensure only assigned faculty can approve/reject
-            if club.faculty_incharge != faculty:
-                return HttpResponse("You are not authorized to approve/reject this request.")
+            if action in ["approve", "reject", "approve_delete"]:
+                club_id = request.POST.get("club_id")
+                club = get_object_or_404(Associations, id=club_id)
 
-            if action == "approve":
-                member = club.created_by
-                # print(member)
-                
-                # member.assosiation.append(club_id)
-                # member.save()
+                # Ensure only assigned faculty can approve/reject
+                if club.faculty_incharge != faculty:
+                    return HttpResponse("You are not authorized to approve/reject this request.")
 
-                # print(member.assosiation)
-                club.status = "approved"  # Approve the club
+                if action == "approve":
+                    club.status = "approved"
+                elif action == "reject":
+                    if club.status == "delete_pending":
+                        club.status = "approved"
+                    else:
+                        club.status = "rejected"
+                elif action == "approve_delete":
+                    club.delete()
+                    return redirect("approve_clubs")
 
-            elif action == "reject":
-                if club.status == "delete_pending":
-                    club.status = "approved"  # If delete is rejected, restore approval
-                club.status = "rejected"
-            elif action == "approve_delete":
-                member = club.created_by
-                # member.assosiation.remove(club_id)
-                # print(member.assosiation)
-                # member.save()
-                club.delete()  # Faculty finally approves deletion
-                return redirect("approve_clubs")
+                club.save()
 
-            club.save()
+            elif action in ["approve_event", "reject_event"]:
+                event_id = request.POST.get("event_id")
+                event = get_object_or_404(Event, id=event_id)
+
+                # Ensure only assigned faculty can approve/reject
+                if event.assosiation.faculty_incharge != faculty:
+                    return HttpResponse("You are not authorized to approve/reject this event.")
+
+                if action == "approve_event":
+                    event.status = "approved"
+                    event.approved_by = faculty
+
+                    # Try to add event to Google Calendar
+                    try:
+                        event.google_calendar_event_id = create_google_calendar_event(event)
+                        messages.success(request, f"Event '{event.title}' approved and added to Google Calendar!")
+                    except Exception as e:
+                        messages.error(request, f"Event approved but failed to add to Google Calendar: {e}")
+
+                elif action == "reject_event":
+                    event.status = "rejected"
+                    messages.warning(request, f"Event '{event.title}' has been rejected.")
+
+                event.save()
+
             return redirect("approve_clubs")
 
         return render(request, "approve_clubs.html", {
             "pending_clubs": pending_clubs,
             "delete_requests": delete_requests,
+            "event_requests": event_requests,  # Make sure this is passed to the template
             "faculty": faculty
         })
 
@@ -215,4 +231,3 @@ def approve_clubs(request):
         return HttpResponse("User profile not found")
     except Faculty.DoesNotExist:
         return HttpResponse("Faculty profile not found")
-

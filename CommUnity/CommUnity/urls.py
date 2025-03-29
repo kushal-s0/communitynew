@@ -26,6 +26,7 @@ urlpatterns = [
     path('faculty/', include('faculty.urls')), 
     path('committees/', include('committees.urls')),
     path('members/', include('members.urls')),
+    path('events/', include('events.urls')),
 ]
 
 if settings.DEBUG:
