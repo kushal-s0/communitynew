@@ -34,7 +34,6 @@
             <a href="#">Calendar</a>
             <a href="#">Notice Board</a>
             <a href="/faculty/add_core_member">Add Core Member</a>
-            <a href="/faculty/faculty-lock-dates/">Add Reserve Date</a>
         </div>
         <div class="options">
             <a href="/faculty/approve_clubs">Notification</a>
@@ -104,8 +103,8 @@
             const toggleButton = document.querySelector(".sidebar-toggle");
         
             // Ensure sidebar is always visible on page load
-            sidebar.classList.add("active");
-            document.body.classList.add("sidebar-active");
+            sidebar.classList.remove("active");
+            document.body.classList.remove("sidebar-active");
         
             toggleButton.addEventListener("click", function (event) {
                 event.stopPropagation(); // Prevents click from propagating to document
