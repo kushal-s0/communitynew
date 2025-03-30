@@ -37,10 +37,10 @@ def committee_member_view(request, pk):
 
     # Fetch all members and filter manually
     all_members = Member.objects.all()
-    members = [member for member in all_members if pk in member.assosiation]  # Assuming assosiation is a list
+    members = [member for member in all_members if pk in member.association]  # Assuming association is a list
 
     # Fetch core members normally
-    core_members = CoreMember.objects.filter(assosiation=committee)
+    core_members = CoreMember.objects.filter(association=committee)
 
     context = {
         'committee': committee,
@@ -199,7 +199,7 @@ def approve_clubs(request):
                 event = get_object_or_404(Event, id=event_id)
 
                 # Ensure only assigned faculty can approve/reject
-                if event.assosiation.faculty_incharge != faculty:
+                if event.association.faculty_incharge != faculty:
                     return HttpResponse("You are not authorized to approve/reject this event.")
 
                 if action == "approve_event":

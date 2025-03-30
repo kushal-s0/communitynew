@@ -159,11 +159,11 @@
     <div class="card">
         <div class="card-body">
             <div class="profile-pic">
-                {% comment %} {% if core_member.id.profile_picture %} {% endcomment %}
-                {% comment %} <img src="{{core_member.id.profile_picture.url}}" alt="Profile Picture"> {% endcomment %}
-                {% comment %} {% else %} {% endcomment %}
+                {% if core_member.id.profile_picture %}
+                <img src="{{core_member.id.profile_picture.url}}" alt="Profile Picture">
+                {% else %}
                 <i class="fa-solid fa-user"></i>
-                {% comment %} {% endif %} {% endcomment %}
+                {% endif %}
             </div>
             <h5 class="card-title">{{ core_member.id.full_name }}</h5>
             <p class="card-text">Designation: {{ core_member.position }}</p>
@@ -177,11 +177,11 @@
 {% for member in members %}
 <li>
     <div class="profile-pic">
-        {% comment %} {% if member.id.profile_picture %}
+        {% if member.id.profile_picture %}
             <img src="{{member.id.profile_picture.url}}" alt="Profile Picture">
-        {% else %} {% endcomment %}
+        {% else %}
             <i class="fa-solid fa-user"></i>
-        {% comment %} {% endif %} {% endcomment %}
+        {% endif %}
     </div>
     <div class="member-info">
         <strong>{{ member.id.full_name }}</strong>

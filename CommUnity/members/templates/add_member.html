@@ -6,83 +6,109 @@
     <title>Student Search</title>
     <style>
         body {
+            height: 100%;
+            margin: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #00171F, #007EA7, #00A8E8);
+            color: #ffffff;
+            background-size: cover;
+            background-attachment: fixed;
         }
-    
+        
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
         }
-    
+        
+        h2 {
+            text-align: center;
+            color: #00171F;
+            margin-bottom: 15px;
+        }
+        
         input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin-bottom:0 15px 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
+            background: #f8f8f8;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
         }
-    
+        
+        input:focus {
+            border-color: #007EA7;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 126, 167, 0.5);
+        }
+        
         .student-list {
             list-style: none;
             padding: 0;
         }
-    
+        
         .student-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px;
-            background: #f8f9fa;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.95);
             border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 5px 0;
-        }
-    
-        .student-info {
-            flex-grow: 1;
+            border-radius: 6px;
+            margin: 6px 0;
+            color: #333;
             font-size: 16px;
             font-weight: bold;
         }
-    
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* Ensures equal spacing between buttons */
+        }
+        
         .role-btn {
-            padding: 5px 10px;
-            margin-left: 5px;
+            padding: 6px 12px;
+            margin-left: 8px;
             border: none;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 14px;
+            transition: background 0.3s ease, transform 0.1s ease-in-out;
         }
-    
+        
         .member-btn {
             background-color: #007bff;
             color: white;
         }
-    
+        
         .member-btn:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
         }
-    
+        
         .core-btn {
             background-color: #28a745;
             color: white;
         }
-    
+        
         .core-btn:hover {
             background-color: #1e7e34;
-        }
+            transform: scale(1.05);
+        }        
     </style>
     
 </head>
 <body>
     <div class="container">
-        <h2>Search Students</h2>
+        <h2>Search Students 🔍</h2>
         <input type="text" id="search" placeholder="Search by name or email" onkeyup="filterStudents()">
         <ul class="student-list" id="studentList"></ul>
     </div>
@@ -110,6 +136,10 @@
                     let studentInfo = document.createElement("span");
                     studentInfo.textContent = `${student.id} : ${student.name} - ${student.email}`;
                     studentInfo.className = "student-info";
+
+                    // Create a container for buttons
+                    let buttonContainer = document.createElement("div");
+                    buttonContainer.className = "button-container";  // Add styling in CSS
     
                     let memberBtn = document.createElement("button");
                     memberBtn.className = "role-btn member-btn";
@@ -124,10 +154,13 @@
                     coreMemberBtn.onclick = function() {
                         confirmSelection(student.id, "core_member");
                     };
+
+                    // Append buttons inside the button container
+                    buttonContainer.appendChild(memberBtn);
+                    buttonContainer.appendChild(coreMemberBtn);
     
                     li.appendChild(studentInfo);
-                    li.appendChild(memberBtn);
-                    li.appendChild(coreMemberBtn);
+                    li.appendChild(buttonContainer);
                     studentList.appendChild(li);
                 });
             })

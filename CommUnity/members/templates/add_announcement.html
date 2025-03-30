@@ -4,45 +4,75 @@
     <title>Add Announcement</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #00171F, #007EA7, #00A8E8);
+            color: #ffffff;
+            background-size: cover;
+            background-attachment: fixed;
         }
+        
         .container {
             width: 50%;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
         }
+        
         h2 {
             text-align: center;
+            color: #00171F;
+            margin-bottom: 20px;
         }
+        
         form {
             display: flex;
             flex-direction: column;
         }
+        
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #00171F;
+        }
+        
         input, textarea, select {
-            margin-bottom: 10px;
-            padding: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
             font-size: 16px;
             border-radius: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
+            background: #f8f8f8;
+            color: #333;
+            transition: all 0.3s ease;
         }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #007EA7;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 126, 167, 0.5);
+        }
+        
         button {
             background: #0088cc;
             color: white;
-            padding: 10px;
-            border: none;
+            padding: 12px;
             font-size: 16px;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s ease;
         }
+
         button:hover {
             background: #006699;
-        }
+        }           
     </style>
 </head>
 <body>

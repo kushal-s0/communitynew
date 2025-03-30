@@ -68,10 +68,14 @@ ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    align-items: center;
 }
 
 ul li {
     margin: 0 15px; /* Adjust spacing */
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
 }
 
 ul li a {
@@ -88,11 +92,15 @@ ul li span{
     color: white;
     text-decoration: none;
     font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
 
 .login-btn{
     margin-right: 20px;
 }
+
 .signup-btn, .login-btn, .logout-btn {
     padding: 8px 15px;
     background: #00A8E8;
@@ -107,13 +115,18 @@ ul li span{
 
 .user-dropdown {
     position: relative;
-    display: inline-block;
+    display: flex;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 
 .user-icon {
     margin-right: 15px;
-    font-size: 18px;
+    font-size: 32px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .dropdown-menu {
@@ -145,9 +158,9 @@ ul li span{
     text-align: left;
 }
 
-/* .dropdown-menu a:last-child {
+.dropdown-menu a:last-child {
     border-bottom: none;
-} */
+}
 
 body.sidebar-active::before {
     content: "";
@@ -191,7 +204,7 @@ body.sidebar-active::before {
 .hero h1 {
     font-size: 48px;
     background: linear-gradient(to right, #00A8E8, #007EA7);
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
 }
