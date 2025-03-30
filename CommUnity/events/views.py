@@ -41,7 +41,7 @@ def create_event(request):
     except CoreMember.DoesNotExist:
         messages.error(request, "Only core members can create events.")
         return redirect("view_calendar")
-    if not core_member.assosiation:
+    if not core_member.association:
         messages.error(request, "You must be a member of an association to create events.")
         return redirect("view_calendar")
     locations = Location.objects.all()
@@ -59,7 +59,7 @@ def create_event(request):
 
         # location = get_object_or_404(Location, id=location_id)
         # Automatically assign club from Core Member
-        ass = core_member.assosiation  
+        ass = core_member.association  
         if FacultyLockDate.objects.filter(locked_date=date_time.date()).exists():
             messages.error(request, "This date is locked by faculty and cannot have events.")
             return redirect("create_event")
@@ -82,7 +82,7 @@ def create_event(request):
             date_time=date_time,
             duration=duration,
             location=location,
-            assosiation=ass,
+            association=ass,
             created_by=user_profile,
             status="pending"  # Awaiting faculty approval
         )
@@ -93,7 +93,7 @@ def create_event(request):
             subject=f"Approval Required for Event: {title}",
             message=f"Dear {faculty_incharge.id.full_name},\n\n"
                     f"A new event '{title}' has been created by {request.user.get_full_name()} "
-                    f"for the assosiation '{ass.name}'. Please review and approve it.\n\n",
+                    f"for the association '{ass.name}'. Please review and approve it.\n\n",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[faculty_incharge.id.id.email],
             fail_silently=False,

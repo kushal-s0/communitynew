@@ -81,7 +81,7 @@
 {% endblock extra_css %}
 
 {% block content%}
-    <div class="container">
+<div class="container">
     <h2>Pending Clubs/Committees</h2>
 
     <div class="card cardCreate">
@@ -124,6 +124,7 @@
         <p>No delete requests.</p>
     {% endfor %}
     </div>
+
     <h2>Event Requests</h2>
     <div class="card event">
     {% for event in event_requests %}
@@ -143,4 +144,5 @@
         <p>No event requests.</p>
     {% endfor %}
     </div>
+</div>
 {% endblock content %}

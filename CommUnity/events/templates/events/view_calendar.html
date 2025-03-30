@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Calendar</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
 
     <!-- FullCalendar CSS & JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
@@ -14,6 +16,48 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Hide scrollbar but allow scrolling */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        body {
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #00171F, #007EA7, #00A8E8);
+            color: #000000;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.85); /* Transparent glass effect */
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: #000;
+        }
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        #calendar {
+            background: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
         /* Prevent overlapping and stretching issues */
         .fc-event {
             white-space: nowrap;      /* Prevent text wrapping */
@@ -21,17 +65,66 @@
             text-overflow: ellipsis;  /* Adds "..." for long text */
             height: auto !important;  /* Ensures correct height */
             position: relative !important; /* Ensures proper placement */
+            border-left: 5px solid #0A58CA !important;  /* Left border */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            border-radius: 6px !important;
+            padding: 5px 8px !important;
+            font-size: 14px;
         }
         /* Ensures proper layout inside the calendar grid */
         .fc-daygrid-event {
             display: block !important;
         }
+        .fc-event-today:hover {
+            background: #0A58CA !important;
+            box-shadow: 0px 5px 12px rgba(0, 123, 255, 0.5) !important;
+            transform:  translateX(4px);
+        }
+        .fc-daygrid-day {
+            background-color: #F8F9FA;
+            border: 1px solid #DEE2E6;
+        }
+        .fc-day-today {
+            background-color: rgba(0, 123, 255, 0.2) !important;
+        }
+        .fc-today-button{
+            background: rgba(0, 123, 255, 0.2) !important;
+            border: none !important;
+            color:  #0A58CA !important;
+            font-weight: bold !important;
+        }
+        button{
+            top: 0px !important;
+            border: none;
+            border-radius: 6px;
+            position: relative !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        button:hover{
+            background-color: rgba(0, 123, 255, 0.2) !important;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+        
+            h2 {
+                font-size: 22px;
+            }
+        
+            .fc-event {
+                font-size: 12px;
+                padding: 4px 6px;
+            }
+        }      
     </style>
 </head>
 <body>
 
     <div class="container mt-4">
-        <h2 class="text-center">Event Calendar</h2>
+        <button onclick="window.location.href='{% url 'home' %}';">Back to Home</button>
+        <h2 style="font-size:32px">Event Calendar</h2>
         <div id="calendar"></div>
     </div>
 
