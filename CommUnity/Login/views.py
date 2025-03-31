@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
-
 from Login.models import UserProfile
 from faculty.models import Faculty
 from members.models import CoreMember, Member

@@ -93,14 +93,14 @@
             color:  #0A58CA !important;
             font-weight: bold !important;
         }
-        button{
+        .back{
             top: 0px !important;
             border: none;
             border-radius: 6px;
             position: relative !important;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        button:hover{
+        .back:hover{
             background-color: rgba(0, 123, 255, 0.2) !important;
         }
         @media (max-width: 768px) {
@@ -123,7 +123,7 @@
 <body>
 
     <div class="container mt-4">
-        <button onclick="window.location.href='{% url 'home' %}';">Back to Home</button>
+        <button class="back" onclick="window.location.href='{% url 'home' %}';">Back to Home</button>
         <h2 style="font-size:32px">Event Calendar</h2>
         <div id="calendar"></div>
     </div>

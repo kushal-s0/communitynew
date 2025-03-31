@@ -2,7 +2,6 @@ from django.shortcuts import render,get_object_or_404,redirect
 from faculty.models import Faculty
 from committees.models import Associations
 from Login.models import UserProfile
-from committees.models import Associations
 from members.models import CoreMember, Member
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -148,13 +147,6 @@ def select_student(request):
             return JsonResponse({'message': str(e)}, status=500)
 
     return render(request, 'add_core_member.html')
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from Login.models import UserProfile
-from faculty.models import Faculty
-from committees.models import Associations
 
 @login_required
 def approve_clubs(request):

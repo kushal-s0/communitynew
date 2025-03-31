@@ -1,4 +1,11 @@
 {% extends 'base.html' %}
+{% block extra_css %}
+<style>
+    h2, .display-dates, .form-label{
+        color: black !important;
+    }
+</style>
+{% endblock extra_css %}
 
 {% block content %}
 <div class="container">
@@ -28,7 +35,7 @@
     </form>
 
     <!-- Locked Dates List -->
-    <h3 class="mt-4">Locked Dates</h3>
+    <h3 class="mt-4 display-dates">Locked Dates</h3>
     <ul class="list-group">
         {% for date in lock_dates %}
             <li class="list-group-item">

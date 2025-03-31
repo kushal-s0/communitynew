@@ -6,19 +6,12 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import send_mail
 from django.conf import settings
-
 from django.contrib.auth.models import User
 from Login.models import UserProfile
 from members.models import CoreMember, Member
-
 from .models import Announcement
- 
-
 from django.contrib import messages
 
-
-
-from Login.models import UserProfile
 # List all clubs
 def club_list(request):
     user = request.user
@@ -172,12 +165,12 @@ def add_club_committee(request):
         faculty_incharge_ssv_id = request.POST.get('faculty_incharge')
 
         if not faculty_incharge_ssv_id or faculty_incharge_ssv_id == "None":
-            return HttpResponse("Bhen ke lode faculty tera baap select karega. Utter Waste")
+            return HttpResponse("Select a faculty!")
 
         try:
             faculty_incharge = Faculty.objects.get(id__ssv_id=faculty_incharge_ssv_id)
         except Faculty.DoesNotExist:
-            return HttpResponse("Bhen ke lode faculty tera baap select karega")
+            return HttpResponse("Faculty does not exist1")
 
         # Only core members can add clubs/committees
         if request.user.userprofile.role != 'core_member':

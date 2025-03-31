@@ -1,33 +1,17 @@
-from django.shortcuts import render
 from django.shortcuts import render,get_object_or_404,redirect
 from django.contrib.auth.models import User
 from Login.models import UserProfile
-
 from django.contrib.auth.decorators import login_required
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.db.models import Q
 from django.db import transaction
 from django.contrib.auth import get_user_model
-
-from django.shortcuts import render,get_object_or_404,redirect
 from faculty.models import Faculty
-from committees.models import Associations
-from Login.models import UserProfile
 from committees.models import Associations
 from members.models import CoreMember, Member
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
-
-from django.db.models import Q
-
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 from committees.models import Announcement
