@@ -160,7 +160,7 @@ def approve_clubs(request):
         # Fetch pending requests
         pending_clubs = Associations.objects.filter(status='pending', faculty_incharge=faculty)
         delete_requests = Associations.objects.filter(status='delete_pending', faculty_incharge=faculty)
-        event_requests  = Event.objects.filter(status='pending', assosiation__faculty_incharge=faculty)
+        event_requests  = Event.objects.filter(status='pending', association__faculty_incharge=faculty)
 
         if request.method == "POST":
             action = request.POST.get("action")

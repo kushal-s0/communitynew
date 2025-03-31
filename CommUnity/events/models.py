@@ -48,7 +48,7 @@ class Event(models.Model):
     date_time = models.DateTimeField()
     duration = models.IntegerField(default=1)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)  # Directly storing location name
-    assosiation = models.ForeignKey(Associations, on_delete=models.CASCADE)
+    association = models.ForeignKey(Associations, on_delete=models.CASCADE)
     created_by = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='created_events')
     approved_by = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
