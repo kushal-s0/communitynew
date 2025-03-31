@@ -28,7 +28,7 @@
         
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
-                    <li><span style="color: white; padding: 10px;">Welcome, {{ user.userprofile.full_name}}</span> 
+                    <li><span style="color: white; padding: 10px;">Welcome, {{ user.userprofile.id.username}}</span> 
                         <div class="user-dropdown">
                             <i class="fa-solid fa-circle-user user-icon"></i>
                             <div class="dropdown-menu">

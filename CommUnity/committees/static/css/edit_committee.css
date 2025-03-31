@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
+    background: linear-gradient(135deg, #00171F, #007EA7, #00A8E8);
     color: #00171F;
     margin: 0;
     padding: 20px;
@@ -10,7 +10,7 @@ body {
 
 /* Page Title */
 h2 {
-    color: #003459;
+    color: black;
     font-size: 28px;
     margin-bottom: 20px;
 }
@@ -22,7 +22,7 @@ form {
     padding: 20px;
     background: #f9f9f9;
     border-radius: 12px;
-    box-shadow: 0px 4px 8px rgba(0, 23, 31, 0.2);
+    box-shadow: 0px 4px 10px rgba(0, 23, 31, 0.4);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +35,7 @@ label {
     color: #003459;
     text-align: left;
     width: 100%;
-    margin: 10px 0 5px;
+    margin: 15px 0 5px;
 }
 
 /* Input Fields & Textarea */

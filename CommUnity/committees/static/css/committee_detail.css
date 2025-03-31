@@ -71,100 +71,208 @@ h1 {
     text-transform: uppercase;
 }
 
-/* Committee Description */
-p {
-    font-size: 18px;
-    color: #00171F;
-    max-width: 800px;
-    margin: 0 auto 15px;
-    padding-top: 10px;
+h1::after {
+    content: "";
+    display: block;
+    width: 40px;  /* Initial short width */
+    height: 3px;
+    background-color: #003459;
+    margin: 5px auto 0;
+    transition: width 0.4s ease-in-out;
 }
 
-/* Faculty In-Charge */
-p.faculty {
-    font-weight: bold;
-    color: #003459;
+h1:hover::after {
+    width: 100px; /* Expanded width on hover */
+}
+
+.committee-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Committee Image */
+.committee-img {
+    max-width: 500px; /* Adjust as needed */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 0px 8px rgba(0, 52, 89, 0.8);
+}
+
+/* Committee Details (Description & Faculty) */
+.committee-details {
+    max-width: 500px;
+    text-align: left;
+    border-bottom: 1.5px solid #003459;
 }
 
 /* Images Section */
-h2, h3 {
+h3 {
     color: #003459;
     font-size: 24px;
-    margin-top: 20px;
-}
-
-img {
-    display: block;
-    margin: 10px auto;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 23, 31, 0.8);
-    max-width: 100%; /* Make images responsive */
-    height: auto; /* Maintain aspect ratio */
+    margin-top: 40px;
 }
 
 .image-gallery {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 15px; /* Add spacing */
-    max-width: 90%;
+    align-items: center;
+    width: 100%; /* Limits width */
+    margin: 20px auto;
+    flex-wrap: wrap; /* Ensures proper layout for fewer images */
+    overflow-x: clip;
 }
 
-.image-gallery img {
-    max-width: 200px; /* Set fixed width for consistency */
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 23, 31, 0.8);
+.image-wrapper {
+    display: flex;
+    transition: transform 1s ease-in-out;
+    width: fit-content;
 }
 
+.image-container {
+    position: relative;
+    width: 300px;  /* Adjust size */
+    height: 300px;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px 0 30px;
+}
 
-/* Buttons */
-.btn {
-    display: inline-block;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0px 4px 6px rgba(0, 52, 89, 0.2);
-    border: none;
-    cursor: pointer;
+.image-container img {
     width: 100%;
-    max-width: 250px;
-    text-align: center;
-    background: linear-gradient(135deg, #003459, #007EA7);
-    color: #FFFFFF;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;  /* Ensures circular shape */
+    box-shadow: 0px 4px 6px rgba(0, 52, 89, 0.5);
+}
+
+/* Dashed circular border */
+.image-container::before {
+    content: "";
+    position: absolute;
+    width: 320px;  /* Slightly larger */
+    height: 320px;
+    border-radius: 50%;
+    border: 3px dashed #003459;
+}
+
+/* Center 1-2 images properly */
+.image-gallery.few-images {
+    justify-content: center;
+}
+
+.image-gallery.auto-slide {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.image-gallery.auto-slide .image-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+
+/* Keyframes for smooth sliding */
+@keyframes slide {
+    0%, 100% { transform: translateX(0); }
+    33% { transform: translateX(-33.33%); }
+    66% { transform: translateX(-66.66%); }
+}
+
+/* Button Section */
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     margin-top: 20px;
 }
 
-.btn:hover {
-    background: linear-gradient(135deg, #00171F, #005F8A);
-    transform: translateY(-2px);
-    box-shadow: 0px 6px 12px rgba(0, 52, 89, 0.3);
+/* Grouping First Three Buttons */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
 
-/* Edit & Delete Buttons */
+/* Common Button Styling */
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Primary (Edit) Button */
 .btn-primary {
-    background: #007EA7;
+    background: linear-gradient(135deg, #007EA7, #0A58CA);
     color: #FFFFFF;
-    padding: 10px 16px;
-    margin-right: 10px;
-}
-
-.btn-danger {
-    background: #d9534f;
-    color: #FFFFFF;
-    padding: 10px 16px;
 }
 
 .btn-primary:hover {
-    background: #005F8A;
+    background: linear-gradient(135deg, #0A58CA, #003F6B);
+}
+
+/* Danger (Delete) Button */
+.btn-danger {
+    background: linear-gradient(135deg, #d9534f, #C9302C);
+    color: #FFFFFF;
 }
 
 .btn-danger:hover {
-    background: #C9302C;
+    background: linear-gradient(135deg, #C9302C, #A0211D);
 }
 
+/* Warning (Transfer Ownership) Button */
+.btn-warning {
+    background: linear-gradient(135deg, #f0ad4e, #ec971f);
+    color: #FFFFFF;
+}
 
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ec971f, #c37c10);
+}
 
+/* Back to Committees List Button */
+.back-button {
+    background: linear-gradient(135deg, #003459, #001F2E) !important;
+    color: #FFFFFF;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.back-button:hover {
+    background: linear-gradient(135deg, #001F2E, #000D17) !important;
+    text-decoration: none;
+}
+
+/* Responsive Fixes */
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
