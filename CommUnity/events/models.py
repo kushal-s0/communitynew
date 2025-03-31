@@ -76,4 +76,4 @@ class Event(models.Model):
                 raise ValidationError("This location is already booked during the selected time.")
 
     def __str__(self):
-        return f"{self.title} - {self.date_time} - {self.assosiation.name}"
+        return f"{self.title} - {self.date_time} - {self.association.name}"
