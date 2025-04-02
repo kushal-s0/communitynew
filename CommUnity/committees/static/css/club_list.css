@@ -169,8 +169,6 @@ ul li span {
 h1 {
     color: #fff;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 28px;
-    margin-bottom: 20px;
 }
 
 /* Back Button */
@@ -184,7 +182,7 @@ h1 {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 18px;
-    padding: 15px 25px;
+    padding: 15px 20px;
     border-radius: 9px;
     transition: all 0.3s ease-in-out;
     text-align: center;
@@ -201,12 +199,22 @@ h1 {
 
 /* Club List - Styled like Committees */
 .club-list li{
+    background: linear-gradient(150deg, #00aeff, #0a2e3e);
+    backdrop-filter: blur(15px);
+    width: 350px;
+    height: 180px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* Align content to the left */
-    position: relative;
-    padding-left: 50px; /* Space for star icon */
+    color: rgb(195, 195, 195);
 }
 
 .club-list ul {
@@ -215,6 +223,7 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 40px;
     gap: 30px;
 }
 
@@ -244,17 +253,27 @@ h1 {
 }
 
 /* Club Links */
-.club-link {
+.club-link{
     color: white;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.club-link:hover {
+.club-name{
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: #00171F;
+}
+
+.club-name:hover {
     text-decoration: underline;
 }
 
@@ -273,13 +292,8 @@ h1 {
     margin-right: 8px;
 }
 
-.star-icon:hover {
-    transform: scale(1.2);
-}
-
 .selected {
     color: gold;
-    transform: scale(1.3);
 }
 
 /* Footer */

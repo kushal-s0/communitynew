@@ -212,6 +212,7 @@ h1{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 40px;
     gap: 30px;
 }
 

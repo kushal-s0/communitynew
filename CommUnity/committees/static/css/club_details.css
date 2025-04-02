@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
+    background: linear-gradient(135deg, #003459, #007EA7);
     color: #00171F;
     margin: 0;
     padding: 20px;

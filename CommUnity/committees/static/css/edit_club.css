@@ -1,7 +1,7 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #FFFFFF;
+    background: linear-gradient(135deg, #0e466e, #007EA7);
     color: #00171F;
     margin: 0;
     padding: 20px;
@@ -10,7 +10,7 @@ body {
 
 /* Page Title */
 h2 {
-    color: #003459;
+    color: whitesmoke;
     font-size: 28px;
     margin-bottom: 20px;
 }

@@ -14,8 +14,7 @@
             <li><a href="{% url 'home'%}">Home</a></li>
             <li><a href="{% url 'committees_list' %}">Committees</a></li>
             <li><a href="{% url 'club_list' %}">Clubs</a></li>
-            <li><a href="#notice-board">Notice Board</a></li>
-    
+               
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
                 <li><span style="color: white; padding: 10px;">Welcome, {{ user.email }}</span> 

@@ -13,10 +13,9 @@
         </div>
         
         <ul>
-            <li><a href="#">Home</a></li>
+            <li><a href="{% url 'home'%}">Home</a></li>
             <li><a href="{% url 'committees_list' %}">Committees</a></li>
             <li><a href="{% url 'club_list' %}">Clubs</a></li>
-            <li><a href="#notice-board">Notice Board</a></li>
     
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
@@ -66,7 +65,7 @@
                         onclick="toggleSelection(this)">
                         {% if club.id in preferences %} &#9733; {% else %} &#9734; {% endif %}
                     </span>
-                    <a href="{% url 'club_detail' pk=club.id %}" class="club-link">
+                    <a href="{% url 'club_detail' pk=club.id %}" class="club-name">
                         {{ club.name }}
                     </a> 
                     <p class="faculty-incharge">

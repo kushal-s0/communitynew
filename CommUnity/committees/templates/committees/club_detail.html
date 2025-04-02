@@ -25,7 +25,7 @@
             <p>No additional images uploaded.</p>
         {% endfor %}
         {% if can_edit %}
-            <a href="{% url 'edit_club_committee' club.id %}" class="btn btn-primary">Edit Club</a>       
+           <br><a href="{% url 'edit_club_committee' club.id %}" class="btn btn-primary">Edit Club</a>       
         {% endif %}
         {% if is_owner %}
             <div class="button-container">
