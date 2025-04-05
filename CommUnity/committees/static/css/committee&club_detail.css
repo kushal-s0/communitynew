@@ -85,17 +85,17 @@ h1:hover::after {
     width: 100px; /* Expanded width on hover */
 }
 
-.committee-info {
+.committee-info, .club-info {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 50px;
-    max-width: 1000px;
-    margin: 0 auto;
+    gap: 200px;
+    min-width: 1200px;
+    margin: 20px auto;
 }
 
 /* Committee Image */
-.committee-img {
+.committee-img, .club-img {
     max-width: 500px; /* Adjust as needed */
     height: auto;
     border-radius: 10px;
@@ -103,18 +103,64 @@ h1:hover::after {
 }
 
 /* Committee Details (Description & Faculty) */
-.committee-details {
+.committee-details ,.club-details {
     max-width: 500px;
     text-align: left;
     border-bottom: 1.5px solid #003459;
 }
 
 /* Images Section */
-h3 {
+/* .line-text {
     color: #003459;
     font-size: 24px;
     margin-top: 40px;
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
+
+.line-text::before, .line-text::after{
+    content: "" !important;
+    flex: 1 !important;
+    height: 10px;
+    background: #003459 !important;
+    margin: 0 10px;
+} */
+
+.wrapper {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .line-text {
+    color: #003459;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+    background-color: none;
+    font-size: 24px; /* match your background */
+    margin-top: 40px;
+  }
+  
+  .line-text::before,
+  .line-text::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 2px;
+    background: #003459;
+  }
+  
+  .line-text::before {
+    right: 100%;
+    margin-right: 20px;
+  }
+  
+  .line-text::after {
+    left: 100%;
+    margin-left: 20px;
+  }  
 
 .image-gallery {
     display: flex;
@@ -134,8 +180,8 @@ h3 {
 
 .image-container {
     position: relative;
-    width: 300px;  /* Adjust size */
-    height: 300px;
+    width: 340px;  /* Adjust size */
+    height: 340px;
     display: flex;
     flex: 0 0 auto;
     justify-content: center;
@@ -155,8 +201,8 @@ h3 {
 .image-container::before {
     content: "";
     position: absolute;
-    width: 320px;  /* Slightly larger */
-    height: 320px;
+    width: 360px;  /* Slightly larger */
+    height: 360px;
     border-radius: 50%;
     border: 3px dashed #003459;
 }
@@ -179,7 +225,6 @@ h3 {
     flex-wrap: nowrap;
     width: 100%;
 }
-
 
 /* Keyframes for smooth sliding */
 @keyframes slide {

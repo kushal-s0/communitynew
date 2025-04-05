@@ -77,7 +77,8 @@
                                     <p class="card-text text-muted small">Created: {{ club.created_at|date:"M d, Y" }}</p>
                                     <p class="card-text flex-grow-1">{{ club.description|truncatechars:100 }}</p>
                                     <div class="mt-auto pt-2">
-                                        <a href="#" class="btn btn-sm btn-outline-success">View Details</a>
+                                        <a href="{% url 'club_detail' pk=club.id%}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                        <a href="{% url 'club_member' pk=club.id%}" class="btn btn-sm btn-outline-primary">View Members</a>
                                     </div>
                                 </div>
                             </div>

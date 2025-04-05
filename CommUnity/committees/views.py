@@ -58,6 +58,7 @@ def club_list(request):
         'clubs': clubs,
         'preferences': preferences
     }
+    request.session['url'] = 'club_list'
     return render(request, 'committees/clubs_list.html', context)
     
 
@@ -111,6 +112,8 @@ def committees_list(request):
 # Club detail view
 def club_detail(request, pk):
     club = get_object_or_404(Associations, pk=pk)
+    url = request.session.get('url','club_list')
+    print("url:",type(url),url)
 
     is_creator = False
     is_owner = False
@@ -124,8 +127,9 @@ def club_detail(request, pk):
             can_edit = CoreMember.objects.filter(association=club,id=core_member.id).exists()
     core_members = CoreMember.objects.all().exclude(id=club.owner.id)
 
-    return render(request, 'committees/club_detail.html', {
+    return render(request, 'committees/club_detail.html',context={
         'club': club,
+        'url': url,
         'is_creator': is_creator,
         'is_owner': is_owner,
         'core_members': core_members,

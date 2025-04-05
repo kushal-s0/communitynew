@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ committee.name }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/committee_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/committee&club_detail.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
 </head>
 <body>
 <div class="container">
@@ -20,8 +21,9 @@
     <img src="{{ committee.image.url }}" alt="Main Committee Image" class="committee-img">
 {% endif %}
 </div>
-
-<h3>Gallery Of Our Memories</h3>
+<div class="wrapper">
+<h3 class="line-text">Gallery Of Our Memories</h3>
+</div>
 <div class="image-gallery">
 <div class="image-wrapper">
 {% for image in committee.images.all %}
@@ -29,7 +31,7 @@
     <img src="{{ image.image.url }}" alt="Committee Image">
 </div>
 {% empty %}
-    <p>No additional images uploaded.</p>
+    <p style="margin-top:-20px;">No additional images uploaded.</p>
 {% endfor %}
 </div>
 </div>

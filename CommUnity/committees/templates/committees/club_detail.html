@@ -5,38 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ club.name }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/club_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/committee&club_detail.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
 </head>
 <body>
-    <div class="club-container">
+    <div class="container">
         <h1>{{ club.name }}</h1>
-        <p>{{ club.description }}</p>
-        <p class="faculty-incharge">Faculty In-Charge: {{ club.faculty_incharge.id.full_name }}</p>
 
-        <h2>Images</h2>
+        <div class="club-info">
+        <div class="club-details">
+        <p style="font-style:italic;font-size: 1.2rem;margin-bottom:10px">{{ club.description }}</p>
+        <p style="font-size: 1rem">Faculty In-Charge: <u>{{ club.faculty_incharge.id.full_name }}</u></p>
+        </div>
         {% if club.image %}
-            <img src="{{ club.image.url }}" alt="Main Club Image">
+            <img src="{{ club.image.url }}" alt="Main Club Image" class="club-img">
         {% endif %}
+        </div>
 
-        <h3>Additional Images</h3>
+        <div class="wrapper">
+        <h3 class="line-text">Gallery Of Our Memories</h3>
+        </div>
+        <div class="image-gallery">
+        <div class="image-wrapper">
         {% for image in club.images.all %}
+        <div class="image-container">
             <img src="{{ image.image.url }}" alt="Club Image">
+        </div>
         {% empty %}
-            <p>No additional images uploaded.</p>
+            <p style="margin-top:-20px;">No additional images uploaded.</p>
         {% endfor %}
+        </div>
+        </div>
+
+        <div class="button-container">
+        <div class="button-group">
         {% if can_edit %}
            <br><a href="{% url 'edit_club_committee' club.id %}" class="btn btn-primary">Edit Club</a>       
         {% endif %}
         {% if is_owner %}
-            <div class="button-container">
-                <form action="{% url 'delete_club_committee' club.id %}" method="post" onsubmit="return confirm('Are you sure?');">
+                <form action="{% url 'delete_club_committee' club.id %}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure?');">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-danger">Delete Club</button>
                 </form>
-            </div>
         {% endif %}
         {% if is_owner %}
-            <div class="button-container">
                 <form action="{% url 'transfer_ownership' club.id %}" method="post">
                     {% csrf_token %}
                     <label for="new_owner">Select New Owner:</label>
@@ -49,12 +61,48 @@
                     </select>                    
                     <button type="submit" class="btn btn-warning">Transfer Ownership</button>
                 </form>
-            </div>
         {% endif %}
-
-        <div class="button-container">
-            <a href="{% url 'club_list' %}" class="btn btn-back">Back to Clubs List</a>
         </div>
-    </div>
+            <a href="{% url url %}" class="back-button">Back to Clubs List</a>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const gallery = document.querySelector(".image-wrapper");
+                const images = Array.from(document.querySelectorAll(".image-container"));
+                const totalImages = images.length;
+            
+                if (totalImages <= 3) return; // No slideshow if 3 or fewer images
+            
+                let index = 0;
+                const imageWidth = images[0].offsetWidth + 30 * 2; // Image width + margins
+            
+                // Clone all images twice for a smoother infinite loop
+        for (let i = 0; i < 2; i++) { // Loop twice to add two sets of cloned images
+            images.forEach((img) => {
+                let clone = img.cloneNode(true);
+                gallery.appendChild(clone);
+            });
+        }
+        
+            
+                function slideImages() {
+                    index++;
+                    gallery.style.transition = "transform 1s ease-in-out";
+                    gallery.style.transform = `translateX(-${index * imageWidth}px)`;
+            
+                    // Seamless looping when reaching the cloned set
+                    if (index >= totalImages) {
+                        setTimeout(() => {
+                            gallery.style.transition = "none"; // Disable transition for instant reset
+                            gallery.style.transform = "translateX(0)"; // Reset position
+                            index = 0;
+                        }, 1000); // Wait for transition to complete
+                    }
+                }
+            
+                setInterval(slideImages, 3000); // Move every 3 seconds
+            });    
+        </script>
 </body>
 </html>

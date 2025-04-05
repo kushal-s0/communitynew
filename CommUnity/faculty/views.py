@@ -21,6 +21,7 @@ User = get_user_model()
 
 def faculty_view(request):
     return render(request, 'faculty.html')
+
 def profile_view(request):   
     active_user = request.user
     user = get_object_or_404(User, username=active_user.username)
@@ -31,6 +32,7 @@ def profile_view(request):
     print(associations)
     context = {'user': user,'user_profile': user_profile,'faculty': faculty,'associations': associations}
     return render(request, 'profile.html', context)
+
 def committee_member_view(request, pk):
     committee = get_object_or_404(Associations, pk=pk)
 
@@ -50,6 +52,26 @@ def committee_member_view(request, pk):
     print(context)  # Debugging
 
     return render(request, 'committee_member.html', context)
+
+def club_member_view(request, pk):
+    club = get_object_or_404(Associations, pk=pk)
+
+    # Fetch all members and filter manually
+    all_members = Member.objects.all()
+    members = [member for member in all_members if pk in member.association]  # Assuming association is a list
+
+    # Fetch core members normally
+    core_members = CoreMember.objects.filter(association=club)
+
+    context = {
+        'club': club,
+        'members': members,
+        'core_members': core_members
+    }
+
+    print(context)  # Debugging
+
+    return render(request, 'club_member.html', context)
 
 
 def faculty_committee(request):
