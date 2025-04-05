@@ -125,7 +125,7 @@ def club_detail(request, pk):
         is_owner = club.owner == core_member
         if core_member:
             can_edit = CoreMember.objects.filter(association=club,id=core_member.id).exists()
-    core_members = CoreMember.objects.all().exclude(id=club.owner.id)
+    core_members = CoreMember.objects.filter(association=club).exclude(id=club.owner.id)
 
     return render(request, 'committees/club_detail.html',context={
         'club': club,
@@ -151,10 +151,9 @@ def committees_detail(request, pk):
         is_owner = committee.owner == core_member
         if core_member:
             can_edit = CoreMember.objects.filter(association=committee,id=core_member.id).exists()
-    core_members = CoreMember.objects.all().exclude(id=committee.owner.id)
+    core_members = CoreMember.objects.filter(association=committee).exclude(id=committee.owner.id)
 
     return render(request, 'committees/committee_detail.html', context={'committee': committee, 'url': url, 'is_creator': is_creator,'is_owner': is_owner,'core_members': core_members,'can_edit': can_edit})
-
 
 @login_required
 def add_club_committee(request):
@@ -264,7 +263,11 @@ def edit_club_committee(request, pk):
         for image in images:
             AssociationImage.objects.create(association=association, image=image)
 
-        return redirect('club_detail', pk=pk)
+        if association.type == 'clubs':
+            return redirect('club_detail', pk=pk)
+        else:
+            return redirect('committees_detail', pk=pk)
+
 
     # Render correct form based on type
     template = 'committees/edit_club.html' if association.type == 'clubs' else 'committees/edit_committee.html'
@@ -330,9 +333,13 @@ def transfer_ownership(request, pk):
 
         club.owner = new_owner
         club.save()
-        return redirect('club_detail', pk=pk)
+        if club.type == 'clubs':
+            return redirect('club_detail', pk=pk)
+        else:
+            return redirect('committees_detail', pk=pk)
 
-    core_members = CoreMember.objects.exclude(id=club.owner.id)
+
+    core_members = CoreMember.objects.filter(association=club).exclude(id=club.owner.id)
 
     return render(request, 'committees/club_detail.html', {
         'club': club,
