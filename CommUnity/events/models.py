@@ -53,6 +53,10 @@ class Event(models.Model):
     approved_by = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     google_calendar_event_id = models.CharField(max_length=255, blank=True, null=True)
+    report_generated = models.BooleanField(default=False)
+    report_content = models.TextField(blank=True, null=True)
+    report_generated_at = models.DateTimeField(blank=True, null=True)
+    report_pdf = models.FileField(upload_to='reports/', blank=True, null=True)
 
     def clean(self):
         """

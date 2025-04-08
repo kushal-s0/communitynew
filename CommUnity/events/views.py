@@ -9,6 +9,29 @@ from .models import Faculty , CoreMember, Location
 from datetime import datetime, timedelta
 from django.utils.timezone import make_aware
 from django.http import JsonResponse
+from django.conf import settings
+from django.utils.timezone import now
+from .forms import EventReportForm
+from fpdf import FPDF
+from reportlab.pdfgen import canvas
+from django.http import FileResponse
+from django.db import models
+from django.utils import timezone
+import os
+import requests
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.files.base import ContentFile
+from django.utils.timezone import now
+from django.conf import settings
+from .models import Event
+from .forms import EventReportForm
+from xhtml2pdf import pisa
+from io import BytesIO
+from datetime import datetime
+
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.styles import getSampleStyleSheet
 
 def get_calendar_events(request):
     events = Event.objects.filter(status="approved")
@@ -29,7 +52,7 @@ def get_calendar_events(request):
 def event_details(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     event.end_time = event.date_time + timedelta(hours=event.duration)
-    return render(request, "events/event_details.html", {"event": event})
+    return render(request, "events/event_details.html", {"event": event,"now": now()})
 
 
 @login_required
@@ -109,3 +132,108 @@ def create_event(request):
 def view_calendar(request):
     events = Event.objects.filter(status="approved")
     return render(request, "events/view_calendar.html", {"events": events})
+
+def generate_report_with_huggingface(prompt):
+    API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.1"
+    headers = {
+        "Authorization": f"Bearer {settings.HUGGINGFACE_API_KEY}"
+    }
+    payload = {
+        "inputs": prompt,
+        "parameters": {"max_new_tokens": 1000}
+    }
+    response = requests.post(API_URL, headers=headers, json=payload)
+    
+    if response.status_code == 200:
+        result = response.json()
+        if isinstance(result, list):
+            full_output = result[0]["generated_text"]
+        elif "generated_text" in result:
+            full_output = result["generated_text"]
+        else:
+            raise Exception("Unexpected Hugging Face response format.")
+        
+        if full_output.strip().startswith(prompt.strip()):
+            return full_output.replace(prompt.strip(), "").strip()
+        return full_output.strip()
+    elif isinstance(result, dict) and "error" in result:
+        raise Exception(f"Hugging Face Error: {result['error']}")
+        
+    raise Exception(f"Hugging Face API error: {response.status_code}, {response.text}")
+
+@login_required
+def generate_event_report(request, event_id):
+    event = get_object_or_404(Event, id=event_id)
+    print("VIEW REACHED")
+
+    if request.method == "POST":
+        print("POST REQUEST DETECTED")
+        form = EventReportForm(request.POST)
+        if form.is_valid():
+            print("FORM IS VALID")
+            data = form.cleaned_data
+
+            # Construct the prompt
+            prompt = f"""
+                        Write a detailed and professional event report for the following:
+
+                        Event Name: {event.title}
+                        Date: {event.date_time.date()}
+                        Time: {event.date_time.time()}
+                        Location: {event.location}
+                        Organizer: {data['organizer']}
+                        Type: {data['event_type']}
+                        Number of Attendees: {data['attendees']}
+                        Speakers: {data['speakers']}
+                        Agenda of the Event: {data['agenda']}
+                        Outcomes of the Event: {data['outcomes']}
+                        Media Links: {data['media_links']}
+
+                        The report should summarize the key points of the event, the success of the session, speaker contributions, and outcomes.
+                        """
+
+
+            try:
+                print("SENDING REQUEST TO HUGGING FACE")
+                # Call Hugging Face
+                report = generate_report_with_huggingface(prompt)
+                print("RESPONSE RECEIVED")
+
+                # Save to model
+                event.report_content = report
+                event.report_generated = True
+                event.report_generated_at = now()
+
+                buffer = BytesIO()
+                filename = f"event_report_{event.id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.pdf"
+                doc = SimpleDocTemplate(buffer, pagesize=A4)
+                styles = getSampleStyleSheet()
+                story = []
+
+                story.append(Paragraph("Event Report", styles["Title"]))
+                story.append(Spacer(1, 12))
+
+                for para in report.split("\n"):
+                    story.append(Paragraph(para.strip(), styles["BodyText"]))
+                    story.append(Spacer(1, 12))
+
+                doc.build(story)
+                buffer.seek(0)
+
+                event.report_pdf.save(filename, ContentFile(buffer.read()))
+                event.save()
+
+                messages.success(request, "Report generated successfully.")
+                return redirect("event_details", event_id=event.id)
+
+            except Exception as e:
+                print("ERROR:", str(e))
+                messages.error(request, f"Error generating report: {str(e)}")
+                return render(request, "events/generate_report_form.html", {"form": form, "event": event})
+        else:
+            print("FORM IS NOT VALID")  # ✅ form error test
+            print(form.errors)
+    else:
+        form = EventReportForm()
+
+    return render(request, "events/generate_report_form.html", {"form": form, "event": event})

@@ -77,11 +77,21 @@
     <h2>{{ event.title }}</h2>
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p><strong>Date & Time:</strong> {{ event.date_time }} - {{ event.end_time }}</p>
-    <p><strong>Description:</strong> {{ event.description }}</p>
+    <p><strong>Description:</strong> {{ event.description }}</p>    
+    <p>{% if request.user.userprofile == event.created_by and event.date_time|add:"%d"|date:"U" < now|date:"U" and not event.report_generated %}
+            <a href="{% url 'generate_event_report' event.id %}">Generate Report</a>
+        {% endif %}
+        
+        {% if event.report_pdf %}
+            {% if event.report_pdf.name %}
+                <a href="{{ event.report_pdf.url }}" download>Download Report</a>
+            {% endif %}
+        {% endif %}
+
+    </p>
     <div style="text-align: center; margin-top: 20px;">
         <a href="/events/calendar/" class="btn btn-primary">Back to Calendar</a>
     </div>
 </div>
-
 </body>
 </html>
