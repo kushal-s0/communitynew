@@ -1,33 +1,76 @@
-let index = 0;
-const images = document.querySelectorAll(".gallery img");
+document.addEventListener("DOMContentLoaded", function () {
+    const gallery = document.querySelector(".gallery");
+    const originalImages = Array.from(gallery.children);
+    const imageWidth = originalImages[0].offsetWidth + 40; // includes margin/padding
+    let index = 0;
 
-function updateGallery() {
-    images.forEach((img, i) => {
-        img.classList.remove("active");
-        if (i === index) {
-            img.classList.add("active");
+    // Clone all original images twice for infinite effect
+    for (let i = 0; i < 2; i++) {
+        originalImages.forEach((img) => {
+            gallery.appendChild(img.cloneNode(true));
+        });
+    }
+
+    function updateActiveImage() {
+        const allImages = document.querySelectorAll(".gallery .image-container img");
+        allImages.forEach(img => img.classList.remove("active"));
+
+        const activeContainer = document.querySelectorAll(".gallery .image-container")[index + 1];
+        if (activeContainer) {
+            const img = activeContainer.querySelector("img");
+            if (img) img.classList.add("active");
         }
-    });
-}
+    }
 
-function nextSlide() {
-    index = (index + 1) % images.length;
-    updateGallery();
-}
+    function slideCarousel() {
+        index++;
+        gallery.style.transition = "transform 1s ease-in-out";
+        gallery.style.transform = `translateX(-${index * imageWidth}px)`;
+        updateActiveImage();
 
-function prevSlide() {
-    index = (index - 1 + images.length) % images.length;
-    updateGallery();
-}
+        if (index >= originalImages.length*2) {
+            setTimeout(() => {
+                gallery.style.transition = "none";
+                gallery.style.transform = `translateX(0)`;
+                index = 0;
+                updateActiveImage();
+            }, 1000);
+        }
+    }
 
-document.addEventListener("DOMContentLoaded", function() {
-    updateGallery(); // Initialize gallery
-    setInterval(nextSlide, 3000); // Auto-slide every 3 seconds
+    let autoSlide = setInterval(slideCarousel, 3000);
+
+    function resetAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(slideCarousel, 3000);
+    }
+
+    window.prevSlide = function () {
+        if (index === 0) {
+            index = originalImages.length;
+            gallery.style.transition = "none";
+            gallery.style.transform = `translateX(-${index * imageWidth}px)`;
+        }
+
+        setTimeout(() => {
+            index--;
+            gallery.style.transition = "transform 1s ease-in-out";
+            gallery.style.transform = `translateX(-${index * imageWidth}px)`;
+            updateActiveImage();
+        }, 20);
+
+        clearInterval(autoSlide);
+        setTimeout(resetAutoSlide, 1000);
+    };
+
+    window.nextSlide = function () {
+        slideCarousel();
+        clearInterval(autoSlide);
+        setTimeout(resetAutoSlide, 1000);
+    };
+
+    updateActiveImage();
 });
-
-// Attach event listeners to buttons
-document.querySelector(".prev").addEventListener("click", prevSlide);
-document.querySelector(".next").addEventListener("click", nextSlide);
 
 document.addEventListener("DOMContentLoaded", function () {
     const userIcon = document.querySelector(".user-icon");
