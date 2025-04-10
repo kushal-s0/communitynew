@@ -9,6 +9,12 @@
     <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% comment %} <style>
+        #notice-board, .notice-board, .notices, .notice {
+            color: black !important;
+        }
+    </style> {% endcomment %}
+        
 </head>
 <body>
 
@@ -150,7 +156,23 @@
     </div>
     </div>
     <div class="notices">
-        <!-- Notices will be dynamically added here -->
+        <h2>Announcements</h2>
+        {% for ann in announcements %}
+            <a href="{% url 'announcement_details' ann.id %}" class="notice">
+                <h4>{{ ann.title }}</h4>
+                <p>{{ ann.description|truncatewords:20 }}</p>
+            </a>
+        {% endfor %}
+
+        <h2>Upcoming Events</h2>
+        {% for event in upcoming_events %}
+            <a href="{% url 'event_details' event.id %}" class="notice">
+                <h4>{{ event.title }}</h4>
+                <p>{{ event.date_time }}</p>
+            </a>
+        {% empty %}
+            <p>No upcoming events.</p>
+        {% endfor %}
     </div>
 </div>
 <!--Event Calendar-->

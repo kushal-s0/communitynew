@@ -446,6 +446,7 @@ body.sidebar-active::before {
     flex-shrink: 0 !important;
     height: 610px;
     flex-grow: 1;
+    color: black
 }
 
 .notice-header {
@@ -453,7 +454,7 @@ body.sidebar-active::before {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    border-bottom: 2px solid #ddd; /* Adds a line below */
+    border-bottom: 2px solid black; /* Adds a line below */
     padding-bottom: 10px; /* Adds some spacing */
 }
 
@@ -484,11 +485,11 @@ body.sidebar-active::before {
 
 .notices {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid black;
     padding: 10px 0;
-}
-
+}  
 .notices:last-child {
     border-bottom: none;
 }

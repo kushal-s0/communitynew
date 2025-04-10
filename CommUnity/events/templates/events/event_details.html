@@ -78,7 +78,7 @@
     <p><strong>Location:</strong> {{ event.location }}</p>
     <p><strong>Date & Time:</strong> {{ event.date_time }} - {{ event.end_time }}</p>
     <p><strong>Description:</strong> {{ event.description }}</p>    
-    <p>{% if request.user.userprofile == event.created_by and event.date_time|add:"%d"|date:"U" < now|date:"U" and not event.report_generated %}
+    <p>{% if request.user.userprofile == event.created_by and event.end_time < now and not event.report_generated %}
             <a href="{% url 'generate_event_report' event.id %}">Generate Report</a>
         {% endif %}
         

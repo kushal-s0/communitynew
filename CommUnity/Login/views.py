@@ -6,18 +6,22 @@ from faculty.models import Faculty
 from members.models import CoreMember, Member
 from committees.models import Associations, AssociationImage
 from collections import defaultdict
-
+from django.utils import timezone
+from committees.models import Announcement
+from events.models import Event
 # Create your views here.
 
 def home_view(request):
     featured_images = []
-
+    announcements = Announcement.objects.order_by('-created_at')[:5]
+    upcoming_events = Event.objects.filter(date_time__gte=timezone.now(), status="approved").order_by('date_time')
     associations = Associations.objects.filter(status='approved')
+    print("Announcements:", announcements)
+    print("Upcoming Events:", upcoming_events)
 
     for association in associations:
         latest_images = association.images.order_by('-uploaded_at')[:3]
         featured_images.extend(list(latest_images))
-        
     #check if user is logged in
     if request.user.is_authenticated:
         user = request.user
@@ -35,9 +39,17 @@ def home_view(request):
                 user = UserProfile.objects.get(id=user)
                 core_member = CoreMember.objects.get(id=user)
                 print(core_member)
-            return render(request, 'account/home.html', {'featured_images': featured_images})
+            return render(request, 'account/home.html', {
+        'featured_images': featured_images,
+        'announcements': announcements,
+        'upcoming_events': upcoming_events
+    })
     else:
-        return render(request, 'account/home.html', {'featured_images': featured_images})
+        return render(request, 'account/home.html', {
+        'featured_images': featured_images,
+        'announcements': announcements,
+        'upcoming_events': upcoming_events
+    })
 
 def edit_profile(request):
     user = request.user

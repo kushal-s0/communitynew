@@ -157,3 +157,8 @@ def select_member(request):
             return JsonResponse({'message': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+def announcement_details(request, announcement_id):
+    announcement = get_object_or_404(Announcement, id=announcement_id)
+    return render(request, "announcement_details.html", {"announcement": announcement})
