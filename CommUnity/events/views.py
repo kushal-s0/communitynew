@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from django.utils.timezone import make_aware
 from django.http import JsonResponse
 from django.conf import settings
-from django.utils.timezone import now
+from django.utils.timezone import now,localtime
 from .forms import EventReportForm
 from fpdf import FPDF
 from reportlab.pdfgen import canvas
@@ -47,8 +47,10 @@ def get_calendar_events(request):
 def event_details(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     event.end_time = event.date_time + timedelta(hours=event.duration)
-    return render(request, "events/event_details.html", {"event": event,"now": now()})
-
+    end_time_ist = localtime(event.end_time)
+    now_ist = localtime(now())
+    event_over = end_time_ist < now_ist
+    return render(request, "events/event_details.html", {"event": event,"end_time_ist": end_time_ist,"now_ist": now_ist,"event_over": event_over})
 
 @login_required
 def create_event(request):
@@ -67,7 +69,7 @@ def create_event(request):
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
-        date_time = datetime.strptime(request.POST["date_time"], "%Y-%m-%dT%H:%M")
+        date_time = make_aware(datetime.strptime(request.POST["date_time"], "%Y-%m-%dT%H:%M"))
         location_id = request.POST["location"]
         duration = int(request.POST["duration"])
 
