@@ -39,8 +39,8 @@ The **CommUnity** is a dynamic platform that allows **Core Members, Faculty, and
 ✅ **Google Authentication**: Secure login using Google.  
 ✅ **Restricted Login**: Only `@somaiya.edu` email addresses can sign up.  
 ✅ **Role-Based Access**:  
-&nbsp;&nbsp;&nbsp;&nbsp;📌 **Core Members**: Create and manage club profiles, request faculty approval.  
-&nbsp;&nbsp;&nbsp;&nbsp;📌 **Faculty**: Approve club changes, manage the academic calendar.  
+✅ **Core Members**: Create and manage club profiles, request faculty approval.  
+✅ **Faculty**: Approve club changes, manage the academic calendar.  
 &nbsp;&nbsp;&nbsp;&nbsp;📌 **Associate Members**: Publish announcements, messages, upcoming events, and registrations.  
 
 ### 📢 Noticeboard & Event Scheduling
