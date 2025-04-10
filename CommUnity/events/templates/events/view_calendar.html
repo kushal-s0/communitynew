@@ -103,27 +103,80 @@
         .back:hover{
             background-color: rgba(0, 123, 255, 0.2) !important;
         }
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 15px;
-            }
-        
-            h2 {
-                font-size: 22px;
-            }
-        
-            .fc-event {
-                font-size: 12px;
-                padding: 4px 6px;
-            }
-        }      
+        /* For tablets (portrait) and below */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .fc-event {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+
+    .back {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}
+
+/* For mobile devices (landscape) */
+@media (max-width: 576px) {
+    h2 {
+        font-size: 20px;
+    }
+
+    .fc-event {
+        font-size: 11px;
+        padding: 3px 5px;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1.1rem;
+    }
+
+    .fc .fc-button {
+        font-size: 0.8rem;
+        padding: 4px 6px;
+    }
+}
+
+/* For very small mobile devices */
+@media (max-width: 400px) {
+    h2 {
+        font-size: 18px;
+    }
+
+    .fc-event {
+        font-size: 10px;
+        padding: 2px 4px;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 1rem;
+    }
+
+    .fc .fc-button {
+        font-size: 0.7rem;
+        padding: 3px 5px;
+    }
+
+    .back {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}           
     </style>
 </head>
 <body>
 
     <div class="container mt-4">
-        <button class="back" onclick="window.location.href='{% url 'home' %}';">Back to Home</button>
+        <button id="back-btn" class="back" onclick="window.location.href='{% url 'home' %}';">Back to Home</button>
         <h2 style="font-size:32px">Event Calendar</h2>
         <div id="calendar"></div>
     </div>
@@ -160,6 +213,11 @@
   
           calendar.render();
       });
+
+      // Check if the page is inside an iframe
+      if (window.self !== window.top) {
+        document.getElementById('back-btn').style.display = 'none';
+    }
     </script>
   
 

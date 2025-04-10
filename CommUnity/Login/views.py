@@ -4,20 +4,23 @@ from django.contrib.auth.forms import AuthenticationForm
 from Login.models import UserProfile
 from faculty.models import Faculty
 from members.models import CoreMember, Member
-from committees.models import Associations
+from committees.models import Associations, AssociationImage
+from collections import defaultdict
+
 # Create your views here.
 
-
-
-# def home_view(request):
-#     return render(request, 'account/home.html')
-
 def home_view(request):
+    featured_images = []
+
+    associations = Associations.objects.filter(status='approved')
+
+    for association in associations:
+        latest_images = association.images.order_by('-uploaded_at')[:3]
+        featured_images.extend(list(latest_images))
+        
     #check if user is logged in
     if request.user.is_authenticated:
         user = request.user
-
-        
         #print (user)
         role = UserProfile.objects.get(id=user).role
         #print(role)
@@ -32,9 +35,9 @@ def home_view(request):
                 user = UserProfile.objects.get(id=user)
                 core_member = CoreMember.objects.get(id=user)
                 print(core_member)
-            return render(request, 'account/home.html')
+            return render(request, 'account/home.html', {'featured_images': featured_images})
     else:
-        return render(request, 'account/home.html')
+        return render(request, 'account/home.html', {'featured_images': featured_images})
 
 def edit_profile(request):
     user = request.user

@@ -66,6 +66,17 @@
 </div>
 
 <script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const gallery = document.querySelector('.image-gallery');
+        const images = gallery.querySelectorAll('img');
+      
+        if (images.length <= 2) {
+          gallery.style.justifyContent = 'center';
+        } else {
+          gallery.style.justifyContent = 'flex-start';
+        }
+      });
+      
     document.addEventListener("DOMContentLoaded", function () {
         const gallery = document.querySelector(".image-wrapper");
         const images = Array.from(document.querySelectorAll(".image-container"));

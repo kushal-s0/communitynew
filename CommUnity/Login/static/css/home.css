@@ -203,7 +203,7 @@ body.sidebar-active::before {
 
 .hero h1 {
     font-size: 48px;
-    background: linear-gradient(to right, #00A8E8, #007EA7);
+    background: linear-gradient(to right, #007EA7, #00A8E8);
     background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 10px;
@@ -270,38 +270,121 @@ body.sidebar-active::before {
 }
 
 .gallery-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 320px; /* Slightly increased height */
-    position: relative;
+    width: 100%; /* Full width */
+    max-width: 100vw;
     overflow: hidden;
-    margin-top: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 20px;
 }
 
 .gallery {
     display: flex;
     transition: transform 0.5s ease-in-out;
     align-items: center;
+    min-width: 100%;
+    height: auto;
+    width: max-content;
 }
 
-.gallery img {
-    width: 300px;
-    height: 200px;
+.image-container {
+    height: 250px;
     margin: 0 10px;
-    opacity: 0.7;
-    transition: all 0.5s;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    border-radius: 8px; /* Smooth edges */
-    border: 4px solid #00171F;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 calc(100% / 3); /* 3 images at a time */
+    padding: 0 15px; /* gap between images */
+    box-sizing: border-box;
+    transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-.gallery img.active {
-    width: 420px; /* Slightly larger */
-    height: 270px;
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 4px solid #00171F;
+    opacity: 0.7;
+    transition: all 0.5s ease-in-out;
+}
+
+    /* Gallery */
+.gallery-section {
+    text-align: center;
+    margin-top: 40px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.gallery-heading {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00171F;
+    margin-bottom: 15px;
+}
+
+.gallery-container {
+    max-width: 1200px; /* or whatever suits your layout */
+    margin: 20 auto; 
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 320px; /* slightly increased to give breathing space */
+    box-sizing: border-box !important;
+    padding-right: 40px !important;
+}
+
+.gallery {
+    display: flex;
+    justify-content: start;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    align-items: center;
+    width: max-content;
+    gap: 20px;
+}
+
+.image-container {
+    flex: 0 0 calc((100% - 60px) / 3);
+    /* flex: 0 0 33.33%; fixed width for each image */
+    height: 300px;   /* fixed height for all */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 4px solid #00171F;
+    opacity: 0.7;
+    transition: all 0.5s ease-in-out;
+    display: block;
+    box-sizing: border-box;
+}
+
+.image-container img {
+    transform: scale(0.9);
+    opacity: 0.6;
+    transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.image-container img.active {
+    transform: scale(1.05);
     opacity: 1;
-    border: 5px solid #00171F; /* Highlight active image */
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
 .arrow {
@@ -400,14 +483,25 @@ body.sidebar-active::before {
     margin-top: 10px;
 }
 
+.main-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 #notice-board {
     background: #f8f9fa;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    margin: 20px auto;
+    width: auto;
+    margin: 20px ;
     overflow: hidden;
+    flex-shrink: 0 !important;
+    height: 610px;
+    flex-grow: 1;
 }
 
 .notice-header {
@@ -455,11 +549,56 @@ body.sidebar-active::before {
     border-bottom: none;
 }
 
+.page-preview-container {
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 !important;
+    flex: 1;
+    margin-right: 0 !important;
+    max-width: 600px;
+  }
+  
+.page-preview {
+    border-radius: 8px;
+    width: 570px;
+    height: 580px;
+    transform-origin: top left;
+    border: 1px solid #ccc;
+    pointer-events: none;  
+  }  
+
+  .page-preview-container button {
+    width: 570px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #00A8E8;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-preview-container button:hover {
+    background-color: #007bb5;
+}
+
 /* Footer */
 footer {
     background: #00171F;
     color: #fff;
-    padding: 20px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.footer-section{
+    flex: 1 1 200px;
+    margin: 10px;
 }
 
 .footer-container {
@@ -483,16 +622,19 @@ footer {
     display: flex;
     flex-direction: column; /* Ensures links stack vertically */
     gap: 8px; /* Adds spacing between links */
+    text-align: left;
 }
 
 .footer-section ul li {
     margin: 0; /* Removes any unnecessary margins */
+    text-align: left;
 }
 
 .footer-section ul li a {
     color: #bbb;
     text-decoration: none;
     font-size: 14px;
+    text-align: left;
 }
 
 .footer-section ul li a:hover {
@@ -500,9 +642,12 @@ footer {
 }
 
 .footer-bottom {
-    text-align: center;
+    text-align: center !important;
     margin-top: 10px;
     padding-top: 10px;
+    align-items: center;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
 }
 
 .footer-links {

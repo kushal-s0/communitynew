@@ -83,12 +83,14 @@
 <!--Gallery-->
 <div class="gallery-section">
 <h2 class="gallery-heading">Featured Highlights</h2>
-<div class="gallery-container">
+<div class="gallery-container">    
     <button class="arrow prev" onclick="prevSlide()">&#10094;</button>
     <div class="gallery" id="gallery">
-        <img src="https://via.placeholder.com/200">
-        <img src="https://via.placeholder.com/200" class="active">
-        <img src="https://via.placeholder.com/200">
+        {% for img in featured_images %}
+        <div class="image-container">
+        <img src="{{ img.image.url }}" {% if forloop.first %}class="active"{% endif %} alt="{{ img.association.name }}">
+        </div>
+        {% endfor %}
     </div>
     <button class="arrow next" onclick="nextSlide()">&#10095;</button>
 </div>
@@ -137,6 +139,7 @@
     </div>
 </div>
 
+<div class="main-dashboard">
 <!--Notice Board-->
 <div class="notice-board" id="notice-board">
     <div class="notice-header">
@@ -150,6 +153,13 @@
         <!-- Notices will be dynamically added here -->
     </div>
 </div>
+<!--Event Calendar-->
+<div class="page-preview-container">
+    <iframe src="{% url 'view_calendar' %}" class="page-preview"></iframe>
+    <button onclick="window.location.href='{% url 'view_calendar' %}'">Expand</button>
+</div>
+</div>
+  
 
     <!-- Footer -->
     <footer>

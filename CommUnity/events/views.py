@@ -19,19 +19,14 @@ from django.db import models
 from django.utils import timezone
 import os
 import requests
-from django.shortcuts import render, get_object_or_404, redirect
 from django.core.files.base import ContentFile
-from django.utils.timezone import now
-from django.conf import settings
-from .models import Event
 from .forms import EventReportForm
 from xhtml2pdf import pisa
 from io import BytesIO
-from datetime import datetime
-
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 def get_calendar_events(request):
     events = Event.objects.filter(status="approved")
@@ -128,7 +123,7 @@ def create_event(request):
     return render(request, "events/create_event.html", {"locations":locations})
 
 
-
+@xframe_options_exempt
 def view_calendar(request):
     events = Event.objects.filter(status="approved")
     return render(request, "events/view_calendar.html", {"events": events})
