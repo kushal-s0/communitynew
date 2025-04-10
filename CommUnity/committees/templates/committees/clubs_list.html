@@ -19,20 +19,7 @@
     
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
-                <li><span style="color: white; padding: 10px;">Welcome, {{ user.email }}</span> 
-                    <div class="user-dropdown">
-                        <i class="fa-solid fa-circle-user user-icon"></i>
-                        <div class="dropdown-menu">
-                            <a href="#">Profile</a>
-                            <a href="{% url 'add_club_committee' %}" class="club-link" style="display: none;" >Add Club/Committee</a>
-                            <a href="{% url 'add_announcement' %}" class="club-link" style="display: none;" >Add Announcement</a>
-                            <a href="{% url 'create_event' %}" class="club-link" style="display: none;" >Add Event</a>
-                            <a href="{% url 'add_member' %}" class="club-link" style="display: none;" >Add Member</a>
-                            <a href="{% url 'view_calendar' %}" >View Calendar</a>
-                            <a href="#">Settings</a>
-                            <a href="{% url 'account_logout' %}">Logout</a>
-                        </div>
-                    </div>
+                <li><span style="color: white; padding: 10px; margin-right: 10px;">Welcome, {{ user.email }}</span> 
                 </li>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
@@ -48,6 +35,8 @@
 
                 </script>
             {% else %}
+            <li><a href="{% url 'account_signup' %}" class="signup-btn">Sign Up</a></li>
+            <li><a href="{% url 'account_login' %}" class="login-btn">Login</a></li>
             {% endif %}
         </ul>
     </nav>

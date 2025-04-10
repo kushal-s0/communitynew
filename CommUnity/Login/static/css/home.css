@@ -182,8 +182,6 @@ body.sidebar-active::before {
     background: #f0f0f0;
 }
 
-
-
 /* Hero Section */
 .hero {
     display: flex;
@@ -250,7 +248,6 @@ body.sidebar-active::before {
     background: black;
     color: white;
 }
-
 
 .btn:hover {
     transform: scale(1.05);
@@ -321,7 +318,7 @@ body.sidebar-active::before {
 
 .image-container img {
     transform: scale(0.9);
-    opacity: 0.6;
+    opacity: 0.8;
     transition: transform 0.8s ease, opacity 0.8s ease;
 }
 
@@ -583,7 +580,6 @@ body.sidebar-active::before {
     height: 580px;
     transform-origin: top left;
     border: 1px solid #ccc;
-    pointer-events: none;  
   }  
 
   .page-preview-container button {

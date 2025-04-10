@@ -94,57 +94,23 @@ ul li span {
     font-weight: bold;
 }
 
-.logout-btn {
+.login-btn{
+    margin-right: 20px;
+}
+
+.logout-btn{
+    margin-right: -20px;
+}
+
+.signup-btn, .login-btn, .logout-btn {
     padding: 8px 15px;
     background: #00A8E8;
     border-radius: 5px;
     color: white;
 }
 
-.logout-btn:hover {
+.signup-btn:hover, .login-btn:hover, .logout-btn:hover {
     background: #007bb5;
-    color: white !important;
-}
-
-.user-dropdown {
-    margin-right: 10px;
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.user-icon {
-    margin-right: 15px;
-    font-size: x-large;
-    color: #fff;
-}
-
-.dropdown-menu {
-    margin-right: 2px;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    display: none;
-    flex-direction: column;
-    min-width: 150px;
-}
-
-.user-dropdown:hover .dropdown-menu {
-    display: flex;
-}
-
-.dropdown-menu a {
-    padding: 10px;
-    text-decoration: none;
-    color: #333;
-    transition: 0.3s;
-}
-
-.dropdown-menu a:hover {
-    background: #00509E;
     color: white;
 }
 

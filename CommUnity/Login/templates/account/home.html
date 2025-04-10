@@ -8,13 +8,7 @@
     <title>Home</title>
     <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    {% comment %} <style>
-        #notice-board, .notice-board, .notices, .notice {
-            color: black !important;
-        }
-    </style> {% endcomment %}
-        
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">        
 </head>
 <body>
 
@@ -27,7 +21,7 @@
             </div>
             
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'committees_list' %}">Committees</a></li>
                 <li><a href="{% url 'club_list' %}">Clubs</a></li>
                 <li><a href="#notice-board">Notice Board</a></li>

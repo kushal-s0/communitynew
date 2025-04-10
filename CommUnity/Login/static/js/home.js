@@ -126,3 +126,18 @@ document.addEventListener("DOMContentLoaded", function () {
     setupAutoScroll("announcements-scroll");
     setupAutoScroll("events-scroll");
   });
+
+  const iframe = document.querySelector("iframe");
+
+  iframe.addEventListener("load", () => {
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+    // Disable all interactions
+    iframeDoc.body.style.pointerEvents = "none";
+
+    // Re-enable buttons with class 'fc-button-primary'
+    const clickableButtons = iframeDoc.querySelectorAll(".fc-button-primary");
+    clickableButtons.forEach(btn => {
+      btn.style.pointerEvents = "auto";
+    });
+  });
