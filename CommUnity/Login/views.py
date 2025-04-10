@@ -13,7 +13,7 @@ from events.models import Event
 
 def home_view(request):
     featured_images = []
-    announcements = Announcement.objects.order_by('-created_at')[:5]
+    announcements = Announcement.objects.order_by('-created_at')[:10]
     upcoming_events = Event.objects.filter(date_time__gte=timezone.now(), status="approved").order_by('date_time')
     associations = Associations.objects.filter(status='approved')
     print("Announcements:", announcements)

@@ -90,3 +90,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+  function setupAutoScroll(containerId) {
+    const container = document.getElementById(containerId);
+    const items = container.children;
+    const total = items.length;
+    let index = 0;
+    const delay = 3000;
+
+    if (total <= 5) return;
+
+    const itemHeight = items[0].offsetHeight ;
+
+    function scrollNext() {
+      if (index < total - 3) {
+        index++;
+      } else {
+        index = 0;
+        container.style.transition = "none";
+        container.style.transform = `translateY(0px)`;
+        setTimeout(() => {
+          container.style.transition = "transform 0.5s ease-in-out";
+          scrollNext();
+        }, delay);
+        return;
+      }
+      container.style.transform = `translateY(-${itemHeight * index}px)`;
+      setTimeout(scrollNext, delay);
+    }
+
+    setTimeout(scrollNext, delay);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    setupAutoScroll("announcements-scroll");
+    setupAutoScroll("events-scroll");
+  });

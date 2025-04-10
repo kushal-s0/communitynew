@@ -88,9 +88,9 @@
             <label>Message:</label>
             <textarea name="message" rows="4" required></textarea>
 
-            <label>Club:</label>
+            <label>Committe/Club:</label>
             <select name="club" required>
-                <option value="">Select Club</option>
+                <option value="">Select Association</option>
                 {% for club in clubs %}
                     <option value="{{ club.id }}">{{ club.name }}</option>
                 {% endfor %}

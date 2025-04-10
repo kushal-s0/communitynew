@@ -40,10 +40,10 @@
                             <div class="dropdown-menu">
                                 <a href="#">Profile</a>
                                 <a href="{% url 'add_club_committee' %}" class="club-link" style="display: none;" >Add Club/Committee</a>
-                                <a href="{% url 'add_announcement' %}" class="club-link" style="display: none;" >Add Announcement</a>
-                                <a href="{% url 'create_event' %}" class="club-link" style="display: none;" >Add Event</a>
                                 <a href="{% url 'add_member' %}" class="club-link" style="display: none;" >Add Member</a>
+                                <a href="{% url 'add_announcement' %}" class="club-link" style="display: none;" >Add Announcement</a>
                                 <a href="{% url 'view_calendar' %}" >View Calendar</a>
+                                <a href="{% url 'create_event' %}" class="club-link" style="display: none;" >Add Event</a>
                                 <a href="#">Settings</a>
                                 <a href="{% url 'account_logout' %}">Logout</a>
                             </div>
@@ -68,7 +68,6 @@
                 {% endif %}
             </ul>
         </nav>
-        
     </header>
 
 <!-- Hero Section -->
@@ -102,7 +101,7 @@
 </div>
 </div>
 
-<!-- -->
+<!--Displaying Category-Wise Associations-->
 <div class="committee-section">
     <h2 class="committee-heading">Find Where You Belong To...🕵️</h2>
     <p class="committee-subheading">Explore our diverse range of committees, clubs and their activities</p>
@@ -156,23 +155,36 @@
     </div>
     </div>
     <div class="notices">
+
+        <div class="notice-section">
         <h2>Announcements</h2>
+        <div class="notices-wrapper">
+            <div class="notices-scroll" id="announcements-scroll">
         {% for ann in announcements %}
             <a href="{% url 'announcement_details' ann.id %}" class="notice">
-                <h4>{{ ann.title }}</h4>
-                <p>{{ ann.description|truncatewords:20 }}</p>
+                <h4>➤ {{ ann.title }}</h4>
+                <p>{{ ann.message|truncatewords:20 }}</p>
             </a>
         {% endfor %}
+        </div>
+        </div>
+        </div>
 
+        <div class="notice-section">
         <h2>Upcoming Events</h2>
+        <div class="notices-wrapper">
+            <div class="notices-scroll" id="events-scroll">
         {% for event in upcoming_events %}
             <a href="{% url 'event_details' event.id %}" class="notice">
-                <h4>{{ event.title }}</h4>
+                <h4>➤ {{ event.title }}</h4>
                 <p>{{ event.date_time }}</p>
             </a>
         {% empty %}
             <p>No upcoming events.</p>
         {% endfor %}
+        </div>
+        </div>
+        </div>
     </div>
 </div>
 <!--Event Calendar-->
