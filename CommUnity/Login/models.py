@@ -14,6 +14,7 @@ class UserProfile(models.Model):
         ('member', 'Member'),
         ('non_participating', 'Non Participating')
     )
+    
 
     id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
     ssv_id = models.IntegerField(null=True, blank=True, unique=True)  # New field
@@ -23,6 +24,7 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     preferences = models.JSONField(default=list,null=True,blank=True) # New field for preferences
+    notification_read = models.JSONField(default=list,null=True,blank=True)
     def save(self, *args, **kwargs):
         # Automatically assign ssv_id if not provided
         if self.ssv_id is None:

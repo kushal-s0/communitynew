@@ -96,3 +96,34 @@ def edit_profile(request):
     
     return render(request, 'account/edit_profile.html', context)
 
+def notification_view(request):
+    user = request.user
+    user_profile = UserProfile.objects.get(id=user)
+    preferences = user_profile.preferences
+    # print('preferences',preferences)
+    announcement = Announcement.objects.filter(club__in=preferences).order_by('-created_at')
+    announcement = announcement.exclude(id__in=user_profile.notification_read)
+    # print('announcement',announcement)
+    context = {
+        'announcement':announcement
+    }
+    return render(request, 'account/notification.html',context)
+
+def mark_as_read(request, announcement_id):
+    user = request.user
+    user_profile = UserProfile.objects.get(id=user)
+    
+    # Get the current notification_read list
+    notification_read = user_profile.notification_read or []
+    
+    # Append the announcement_id if it's not already in the list
+    if announcement_id not in notification_read:
+        notification_read.append(announcement_id)
+        
+    # Update the model field with the modified list
+    user_profile.notification_read = notification_read
+    
+    # Save the changes to the database
+    user_profile.save()
+    
+    return redirect('notification_view')
