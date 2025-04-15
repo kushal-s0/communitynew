@@ -20,7 +20,13 @@ User = get_user_model()
 # Create your views here.
 
 def faculty_view(request):
-    return render(request, 'faculty.html')
+    active_user = request.user
+    user = get_object_or_404(User, username=active_user.username)
+    print(user.email)
+    user_profile = get_object_or_404(UserProfile, id=user)
+    faculty = Faculty.objects.get(id=user_profile)
+    context = {'user': user,'user_profile': user_profile,'faculty': faculty}
+    return render(request, 'faculty.html',context)
 
 def profile_view(request):   
     active_user = request.user

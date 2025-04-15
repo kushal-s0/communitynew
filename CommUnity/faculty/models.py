@@ -12,6 +12,7 @@ class Faculty(models.Model):
     designation = models.CharField(max_length=100,null=True,blank=True)
     locked_dates = models.JSONField(null=True,blank=True)
     permissions = models.JSONField(default=list,null=True,blank=True)
+    can_lock_dates = models.BooleanField(default=False)
 
     def add_permission(self, permission):
         if permission not in self.permissions:

@@ -34,7 +34,9 @@
             <a href="/faculty/committee">My Associations</a>
             <a href="/faculty/add_core_member">Add Core Member</a>
             <a href="{% url 'view_calendar' %}">View Calendar</a>
-            <a href="{% url 'manage_faculty_lock_dates' %}">Add Reserve Date</a>
+            {% if faculty.can_lock_dates %}
+            <a href="{% url 'manage_faculty_lock_dates' %}">Add Reserve Date</a>            
+            {% endif %}
             <a href="#">Notice Board</a>
         </div>
         <div class="options">
