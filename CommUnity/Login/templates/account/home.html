@@ -97,6 +97,7 @@
 </div>
 
 <!--Displaying Category-Wise Associations-->
+
 <div class="committee-section">
     <h2 class="committee-heading">Find Where You Belong To...🕵️</h2>
     <p class="committee-subheading">Explore our diverse range of committees, clubs and their activities</p>
@@ -106,6 +107,11 @@
             <h3>Technical</h3>
             <p>Organizing technical events, workshops, and fostering innovation across campus.</p>
             <ul>
+                {% for association in associations %}
+                    {% if association.category == 'Technical' %}
+                        <p>{{ association.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
 
@@ -113,6 +119,11 @@
             <h3>Cultural</h3>
             <p>Promoting arts, culture, and organizing festive celebrations on campus.</p>
             <ul>
+                {% for association in associations %}
+                    {% if association.category == 'Cultural' %}
+                        <p>{{ association.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
 
@@ -120,6 +131,11 @@
             <h3>Sports</h3>
             <p>Organizing sports events and promoting physical fitness among students.</p>
             <ul>
+                {% for association in associations %}
+                    {% if association.category == 'Sports' %}
+                        <p>{{ association.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
 
@@ -127,6 +143,11 @@
             <h3>Social</h3>
             <p>Fostering community engagement through social events and outreach programs.</p>
             <ul>
+                {% for association in associations %}
+                    {% if association.category == 'Other' %}
+                        <p>{{ association.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
 
@@ -134,6 +155,11 @@
             <h3>Others</h3>
             <p>Supporting diverse interests and activities beyond specific committees.</p>
             <ul>
+                {% for association in associations %}
+                    {% if association.category == 'Technical' %}
+                        <p>{{ association.name }}</p>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>

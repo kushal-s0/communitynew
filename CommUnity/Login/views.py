@@ -42,13 +42,15 @@ def home_view(request):
             return render(request, 'account/home.html', {
         'featured_images': featured_images,
         'announcements': announcements,
-        'upcoming_events': upcoming_events
+        'upcoming_events': upcoming_events,
+        'associations': associations,
     })
     else:
         return render(request, 'account/home.html', {
         'featured_images': featured_images,
         'announcements': announcements,
-        'upcoming_events': upcoming_events
+        'upcoming_events': upcoming_events,
+        'associations': associations
     })
 
 def edit_profile(request):

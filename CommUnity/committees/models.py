@@ -15,10 +15,20 @@ class Associations(models.Model):
         ('rejected', 'Rejected'),
         ('delete_pending', 'Delete Request Pending'),
     )
+    CATEGORY = (
+        ('None', 'None'),
+        ('Academic', 'Academic'),
+        ('Technical', 'Technical'),
+        ('Cultural', 'Cultural'),
+        ('Sports', 'Sports'),
+        ('Social', 'Social'),
+        ('Other', 'Other')
+    )
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     type = models.CharField(max_length=15, choices=ROLE_CHOICES)
+    category = models.CharField(max_length=30, choices=CATEGORY, default='None')
     faculty_incharge = models.ForeignKey('faculty.Faculty', on_delete=models.CASCADE)
     created_by = models.ForeignKey('members.CoreMember', on_delete=models.CASCADE, null=True, blank=True)  
     created_at = models.DateTimeField(auto_now_add=True)
@@ -28,7 +38,7 @@ class Associations(models.Model):
     # edit_request_data = models.JSONField(null=True, blank=True) 
 
     def __str__(self):
-        return f"{self.name} - {self.status}"
+        return f"{self.name} {self.category}- {self.status}"
 # Announcements Model
 class Announcement(models.Model):
     id = models.AutoField(primary_key=True)
