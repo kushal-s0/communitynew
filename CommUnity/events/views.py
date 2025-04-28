@@ -83,11 +83,13 @@ def create_event(request):
         if FacultyLockDate.objects.filter(locked_date=date_time.date()).exists():
             messages.error(request, "This date is locked by faculty and cannot have events.")
             return redirect("create_event")
+        event_end_time = date_time + timedelta(hours=duration)
         overlapping_events = Event.objects.filter(
             location=location,
             status="approved",
+        ).filter(
             date_time__lt=event_end_time,
-            date_time__gte=date_time
+            date_time__gte=date_time - timedelta(hours=duration)
         )
         for event in overlapping_events:
             existing_event_end_time = event.date_time + timedelta(hours=event.duration)
