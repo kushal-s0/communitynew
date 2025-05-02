@@ -9,6 +9,8 @@ from collections import defaultdict
 from django.utils import timezone
 from committees.models import Announcement
 from events.models import Event
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 def home_view(request):
@@ -129,3 +131,34 @@ def mark_as_read(request, announcement_id):
     user_profile.save()
     
     return redirect('notification_view')
+
+def profile_view(request):
+    user = request.user
+    user_profile = get_object_or_404(UserProfile, id=user)
+
+    context = {
+        'user': user,
+        'user_profile': user_profile,
+        'role': None,
+    }
+
+    try:
+        core_member = CoreMember.objects.get(id=user_profile)
+        associations = Associations.objects.filter(id=core_member.association.id) if core_member.association else []
+        context.update({
+            'role': 'core',
+            'member_obj': core_member,
+            'associations': associations,
+        })
+    except CoreMember.DoesNotExist:
+        try:
+            member = Member.objects.get(id=user_profile)
+            context.update({
+                'role': 'member',
+                'member_obj': member,
+                'associations': member.association, 
+            })
+        except Member.DoesNotExist:
+            context['role'] = 'unknown'
+
+    return render(request, 'account/profile.html', context)

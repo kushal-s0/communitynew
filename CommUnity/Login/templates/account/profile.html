@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}<title>Profile</title>{% endblock title %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-picture">
+            <img src="{{ user_profile.profile_picture }}" alt="Profile Picture">
+            <i class="fa-solid fa-user" aria-hidden="true"></i>
+        </div>
+        <div class="profile-content">
+            <div class="profile-info">
+                <h1>{{ user_profile.full_name }}</h1>
+                {% if role == 'core' %}
+                    <p><strong>Position:</strong> {{ member_obj.position }}</p>
+                    <p><strong>Permissions:</strong> 
+                        {% if member_obj.permissions %}
+                            {{ member_obj.permissions|join:", " }}
+                        {% else %}
+                            None
+                        {% endif %}
+                    </p>
+                {% elif role == 'member' %}
+                    <p><strong>Position:</strong> {{ member_obj.position }}</p>
+                    <p><strong>Joined at:</strong> {{ member_obj.joined_at }}</p>
+                    <p><strong>Notification Preference:</strong> {{ member_obj.notification_preference }}</p>
+                {% else %}
+                    <p>You are not assigned any member role.</p>
+                {% endif %}
+            </div>
+            <div class="contact">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% if associations %}
+    <div class="incharge-container">
+        <p class="incharge-heading"><strong>{% if role == 'core' %}Association:{% else %}Associated With:{% endif %}</strong></p>
+        <div class="associations">
+            {% if role == 'core' %}
+                {% for assoc in associations %}
+                    <p>{{ assoc.name }} ({{ assoc.type }})</p>
+                {% endfor %}
+            {% elif role == 'member' %}
+                {% for assoc in associations %}
+                    <p>{{ assoc }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <a href="{% url 'edit_profile' %}"><i class="fa-solid fa-user-pen" style="color:#00171F"></i></a>
+</div>
+{% endblock content %}
