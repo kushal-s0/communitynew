@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>Notifications</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}" class="favicon">
 
     <!-- Bootstrap CSS CDN (you can download and serve locally if preferred) -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <style>
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #00171F, #007EA7, #00A8E8);
+            background-size: cover;
+            background-attachment: fixed;
         }
         .notification-card {
             background-color: #ffffff;
@@ -32,7 +35,7 @@
 <body>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Your Notifications</h2>
+    <h2 class="mb-4" style="color: black;">Your Notifications</h2>
 
     {% if announcement %}
         {% for ann in announcement %}

@@ -19,7 +19,7 @@
     
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account_logout' %}" class="logout-btn">Logout</a></li>
-                <li><span style="color: white; padding: 10px; margin-right: 10px;">Welcome, {{ user.email }}</span> 
+                <li><span style="color: white; padding: 10px; margin-right: 10px;">Welcome, {{ user.userprofile.id.username }}</span> 
                 </li>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
