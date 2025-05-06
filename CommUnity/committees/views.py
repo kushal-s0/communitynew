@@ -184,6 +184,7 @@ def add_club_committee(request):
         name = request.POST['name']
         description = request.POST['description']
         association_type = request.POST.get('type')  # Use .get() to avoid errors
+        category = request.POST.get('category')
         image = request.FILES.get('image')
 
         club = Associations(
@@ -191,6 +192,7 @@ def add_club_committee(request):
             description=description,
             type=association_type,
             faculty_incharge=faculty_incharge,
+            category=category,
             created_by=core_member,
             owner=core_member,
             status='pending'

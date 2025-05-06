@@ -82,7 +82,20 @@
             {% for faculty in faculties %}
                 <option value="{{ faculty.id.ssv_id }}">{{ faculty.id.full_name }} ({{ faculty.id.ssv_id }})</option>
             {% endfor %}
-        </select>        
+        </select>    
+        
+        <label for="category">Category</label>
+        <select name="category" required>
+            <option value="None">None</option>
+            <option value="Academic">Academic</option>
+            <option value="Technical">Technical</option>
+            <option value="Cultural">Cultural</option>
+            <option value="Sports">Sports</option>
+            <option value="Social">Social</option>
+            <option value="Other">Other</option>
+        </select>
+
+
     
         <div class="file-upload-container">
             <label for="image" class="custom-file-upload">Choose Main Image</label>

@@ -106,61 +106,61 @@
         <div class="committee-card tech">
             <h3>Technical</h3>
             <p>Organizing technical events, workshops, and fostering innovation across campus.</p>
-            <ul>
+            <div class="scrollable-list">
                 {% for association in associations %}
                     {% if association.category == 'Technical' %}
-                        <p>{{ association.name }}</p>
+                        <p class="scroll-item">{{ association.name }}</p>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
         <div class="committee-card cultural">
             <h3>Cultural</h3>
             <p>Promoting arts, culture, and organizing festive celebrations on campus.</p>
-            <ul>
+            <div class="scrollable-list">
                 {% for association in associations %}
                     {% if association.category == 'Cultural' %}
-                        <p>{{ association.name }}</p>
+                        <p class="scroll-item">{{ association.name }}</p>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
         <div class="committee-card sports">
             <h3>Sports</h3>
             <p>Organizing sports events and promoting physical fitness among students.</p>
-            <ul>
+            <div class="scrollable-list">
                 {% for association in associations %}
                     {% if association.category == 'Sports' %}
-                        <p>{{ association.name }}</p>
+                        <p class="scroll-item">{{ association.name }}</p>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
         <div class="committee-card social">
             <h3>Social</h3>
             <p>Fostering community engagement through social events and outreach programs.</p>
-            <ul>
+            <div class="scrollable-list">
                 {% for association in associations %}
-                    {% if association.category == 'Other' %}
-                        <p>{{ association.name }}</p>
+                    {% if association.category == 'Social' %}
+                        <p class="scroll-item">{{ association.name }}</p>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
         </div>
 
         <div class="committee-card others">
             <h3>Others</h3>
             <p>Supporting diverse interests and activities beyond specific committees.</p>
-            <ul>
+            <div class="scrollable-list">
                 {% for association in associations %}
-                    {% if association.category == 'Technical' %}
-                        <p>{{ association.name }}</p>
+                    {% if association.category == 'Others' %}
+                        <p class="scroll-item">{{ association.name }}</p>
                     {% endif %}
                 {% endfor %}
-            </ul>
+            </div>
         </div>
     </div>
 </div>

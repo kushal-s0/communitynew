@@ -719,6 +719,26 @@ hr {
     margin: 20px 0;
 }
 
+.scrollable-list {
+    max-height: 200px;  /* adjust as needed */
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.scroll-item {
+    margin: 5px 0;
+    padding: 8px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.scroll-item:hover {
+    background-color: #e0e0e0;
+}
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .footer-container {
