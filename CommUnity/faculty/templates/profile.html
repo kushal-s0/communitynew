@@ -11,9 +11,13 @@
 
         <div class="profile-header">
         <div class="profile-picture">
-            <img src="{{ user_profile.profile_picture }}" alt="">
-            <i class="fa-solid fa-user" aria-hidden="true"></i>
+            {% if user_profile.profile_picture and user_profile.profile_picture.url %}
+                <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture">
+            {% else %}
+                <i class="fa-solid fa-user" aria-hidden="true" style="font-size: 80px; color: gray;"></i>
+            {% endif %}
         </div>
+
         <div class="profile-content">
             <div class="profile-info">
               <h1>{{ user_profile.full_name }}</h1>

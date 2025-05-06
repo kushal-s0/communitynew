@@ -81,6 +81,9 @@ def edit_profile(request):
 
     if request.method == 'POST':
         user_profile.full_name = request.POST.get('full_name')
+        if 'profile_picture' in request.FILES:
+            user_profile.profile_picture = request.FILES['profile_picture']
+
         user_profile.save()
 
         if user_profile.role == 'faculty':
