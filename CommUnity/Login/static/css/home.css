@@ -220,9 +220,13 @@ body.sidebar-active::before {
 }
 /* Right-side Image */
 .body-image {
-    max-width: 110%;
+    max-width: 120%;
     height: auto;
     object-fit: contain;
+    -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+    mask-image: radial-gradient(circle, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 100%);
+    mask-repeat: no-repeat;
+    mask-size: cover;
 }
 
 /* Button styling */

@@ -96,7 +96,8 @@ h1:hover::after {
 
 /* Committee Image */
 .committee-img, .club-img {
-    max-width: 500px; /* Adjust as needed */
+    margin-right: 300px;
+    max-width: 300px; /* Adjust as needed */
     height: auto;
     border-radius: 10px;
     box-shadow: 0px 0px 8px rgba(0, 52, 89, 0.8);
